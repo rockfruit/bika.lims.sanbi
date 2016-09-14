@@ -89,6 +89,41 @@
         </td>
     </tr>
     <tr>
+        <td>Storage unit type
+        </td>
+        <td>
+            <div style="width:100%" class="field ArchetypesReferenceWidget">
+                <input
+                        type="text"
+                        name="units_type"
+                        id="units_type"
+                        class="blurrable firstToFocus referencewidget"
+                        value=""
+                        base_query='{"portal_type": "StorageType", "inactive_state": "active"}'
+                        search_query='{}'
+                        catalog_name="bika_setup_catalog"
+                        ui_item="Title"
+                        autocomplete="false"
+                        combogrid_options='{"colModel": [{"columnName": "Title", "align": "left", "label": "Storage Type Title", "width": "100"},
+                                            {"columnName": "UID", "hidden": true}],
+                                "search_fields": ["Title"],
+                                "catalog_name": "bika_setup_catalog",
+                                "url": "referencewidget_search",
+                                "discard_empty": [],
+                                "popup_width": "550px",
+                                "showOn": true,
+                                "searchIcon": true,
+                                "minLength": "0",
+                                "resetButton": false,
+                                "sord": "asc",
+                                "sidx": "Title",
+                                "force_all": true,
+                                "portal_types": {}}'/>
+                <input type="hidden" name="units_type_uid" id="units_type_uid">
+            </div>
+        </td>
+    </tr>
+    <tr>
         <td>Department
         </td>
         <td>
@@ -119,6 +154,7 @@
                                 "sidx": "Title",
                                 "force_all": true,
                                 "portal_types": {}}'/>
+                <input type="hidden" name="units_department_uid" id="units_department_uid">
             </div>
         </td>
     </tr>

@@ -1,3 +1,8 @@
+# This file is part of Bika LIMS
+#
+# Copyright 2011-2016 by it's authors.
+# Some rights reserved. See LICENSE.txt, AUTHORS.txt.
+
 """Analysis result range specifications for a client
 """
 from AccessControl import ClassSecurityInfo
@@ -59,7 +64,7 @@ Schema((
     RecordsField('ResultsRange',
         # schemata = 'Specifications',
         required = 1,
-        type = 'analysisspec',
+        type = 'resultsrange',
         subfields = ('keyword', 'min', 'max', 'error', 'hidemin', 'hidemax',
                      'rangecomment'),
         required_subfields = ('keyword', 'error'),
