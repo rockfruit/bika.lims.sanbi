@@ -350,7 +350,7 @@ class AddManagedStorage(Storage):
                 storage, temperature, department, address)
             # storage types are set on this managed storage:
             self.set_storage_types(storage, storage_types)
-
+            storage.reindexObject()
             # Create storage positions
             for p in range(1, nr_positions + 1):
                 pos = api.content.create(
