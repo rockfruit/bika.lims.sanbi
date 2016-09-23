@@ -223,6 +223,7 @@ schema = BikaSchema.copy() + Schema((
         write_permission=SampleSample,
         widget = DateTimeWidget(
             label=_("Date Sampled"),
+            show_time=True,
             size=20,
             visible={'edit': 'visible',
                      'view': 'visible',
@@ -297,6 +298,7 @@ schema = BikaSchema.copy() + Schema((
         widget = DateTimeWidget(
             label=_("Sampling Date"),
             description=_("Define when the sampler has to take the samples"),
+            show_time=True,
             visible={'edit': 'visible',
                      'view': 'visible',
                      'header_table': 'visible',
