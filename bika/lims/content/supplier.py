@@ -77,4 +77,15 @@ class Supplier(Organisation):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
+    def getSuppliers(self, dl=True):
+        pairs = []
+        objects = []
+        for supplier in self.aq_parent.objectValues('Supplier'):
+            if isActive(supplier) and supplier.UID() != self.UID():
+                pairs.append((supplier.UID(), supplier.Title()))
+                if not dl:
+                    objects.append(supplier)
+        pairs.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
+        return dl and DisplayList(pairs) or objects
+
 registerType(Supplier, PROJECTNAME)

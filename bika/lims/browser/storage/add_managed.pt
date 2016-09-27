@@ -1,0 +1,232 @@
+<html>
+<body>
+<style type="text/css">
+    .add-managed{
+      padding: 10px 0px;
+    }
+    .add-managed .discreet{
+      font-size:50%;
+      color:#ddd;
+    }
+    .add-managed input{
+      margin-bottom:5px;
+    }
+    .discreet li {
+        padding:0;
+        margin:0;
+        line-height:1em !important;
+    }
+    table {
+        width:100%;
+    }
+    td {
+        padding:5px 10px 5px 0;
+    }
+    td.bordertop {
+        border-top: 1px solid #ddd;
+    }
+
+    select.storage_types {margin-left:15px;}
+
+</style>
+
+
+<table>
+    <tr>
+        <td>Template for new Titles:
+            <div class="discreet">The display titles for the new storages.
+                The string '{id}' will be replaced by the sequential ID, so
+                if these storages are boxes, a value of 'Box {id}' will create
+                'Box 1', 'Box 2' etc.
+            </div>
+        </td>
+        <td><input name="managed_titletemplate"
+                   class="titletemplate"
+                   placeholder="Box {id}"
+                   autocomplete="false"
+                   tal:attributes="value python: request.get('managed_titletemplate', '')"/>
+        </td>
+    <tr>
+    <tr>
+        <td>Template for new IDs:
+            <div class="discreet">IDs should not include spaces or non-ascii
+                characters. The string '{id}' will be replaced by the
+                sequential ID.
+            </div>
+        </td>
+        <td>
+            <input name="managed_idtemplate"
+                   class="idtemplate"
+                   placeholder="box-{id}"
+                   autocomplete="false"
+                   tal:attributes="value python: request.get('managed_idtemplate', '')"/>
+        </td>
+    </tr>
+    <tr>
+        <td>ID Sequence Start:
+            <div class="discreet">
+                The number of the first item in the ID sequence. This can be a
+                simple number like '1', or it can be a string like 'A' or 'AA'.
+            </div>
+        </td>
+        <td>
+            <input name="managed_start"
+                   class="start"
+                   autocomplete="false"
+                   tal:attributes="value python: request.get('managed_start', '1')"/>
+        </td>
+    </tr>
+    <tr>
+        <td>Number of items:
+            <div class="discreet">
+                The number of storage units to create. If the sequence start
+                is 'A' and the number of items is 5, items A,B,C,D and E will
+                be created.
+            </div>
+        </td>
+        <td>
+            <input name="managed_nr_items"
+                   class="nr_items"
+                   type="number"
+                   autocomplete="false"
+                   tal:attributes="value python: request.get('managed_nr_items', '1')"/>
+        </td>
+    </tr>
+    <tr>
+        <td>Temperature
+        </td>
+        <td>
+            <input name="managed_temperature"
+                   class="temperature"
+                   autocomplete="false"
+                   tal:attributes="value python: request.get('managed_temperature', '')"/>
+        </td>
+    </tr>
+    <tr>
+        <td>Department
+        </td>
+        <td>
+            <div style="width:100%" class="field ArchetypesReferenceWidget">
+                <input
+                        type="text"
+                        name="managed_Department"
+                        id="managed_Department"
+                        class="blurrable firstToFocus referencewidget"
+                        value=""
+                        base_query='{"portal_type": "Department", "inactive_state": "active"}'
+                        search_query='{}'
+                        catalog_name="bika_setup_catalog"
+                        ui_item="Title"
+                        autocomplete="false"
+                        combogrid_options='{"colModel": [{"columnName": "Title", "align": "left", "label": "Department Title", "width": "100"},
+                                            {"columnName": "UID", "hidden": true}],
+                                "search_fields": ["Title"],
+                                "catalog_name": "bika_setup_catalog",
+                                "url": "referencewidget_search",
+                                "discard_empty": [],
+                                "popup_width": "550px",
+                                "showOn": true,
+                                "searchIcon": true,
+                                "minLength": "0",
+                                "resetButton": false,
+                                "sord": "asc",
+                                "sidx": "Title",
+                                "force_all": true,
+                                "portal_types": {}}'/>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Address
+        </td>
+        <td>
+            <textarea name="managed_address" id="managed_address" tal:attributes="value python: request.get('managed_address', '')"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="bordertop">
+            <div class="managed_positions">
+                <span style="font-weight: bold;">Number of positions</span>
+                <span class="fieldRequired" title="Required">"&nbsp;"</span><br/>
+                <span class="formHelp">
+                    Enter the number of possible storage positions
+                    located inside these storages.
+                </span>
+                <input name="managed_positions"
+                       class="managed_positions"
+                       type="number"
+                       tal:attributes="value python: request.get('managed_positions', '')"/>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div class="managed_storage_types">
+                <span style="font-weight: bold;">Storage Types</span>
+                <span class="fieldRequired" title="Required">"&nbsp;"</span><br/>
+                <span class="formHelp">
+                    Select the types of objects that can be stored here.
+                </span>
+                <select id="managed_storage_types" name="managed_storage_types" size="8" multiple>
+                    <tal:x tal:repeat="stype python:context.getStorageTypes(show_all=True)">
+                        <option tal:attributes="value python:stype['identifier']">
+                            <tal:t tal:replace="python: stype['title']"/>
+                        </option>
+                    </tal:x>
+                </select>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div class="graphical_representation">
+                <div>
+                    <span style="font-weight: bold;">Graphical representation</span>
+                    <span class="fieldRequired" title="Required">"&nbsp;"</span><br/>
+                            <span class="formHelp" id="storagetype_help">Select a dimension. In first dimension, level ids will be
+                                a series of numbers eg: 1, 2, 3, ... In second dimension, ids are coded by concatenating a letter, row,
+                                with a number, column, eg: A1, A2, B1, B2, ...In third dimension the ids are represented with a concatenation
+                                of letter and two digits. The letter here represent the layer and the two digits the row and the column
+                                respectively eg: A11, A12,...
+                                </span>
+                </div>
+                <div data-fieldname="Dimension" id="dimension" style="display: inline-block;">
+                    <select name="managed_dimension" style="width: 300px; height: 34px; overflow: hidden; border: 1px solid #eee;">
+                        <option value="First">First Dimension</option>
+                        <option value="Second">Second Dimension</option>
+                        <option value="Third">Third Dimension</option>
+                    </select>
+                </div>
+
+                <div style="display: inline-block; padding-left:10px; border: 1px solid #bbb; padding: 5px; width: auto;">
+                    <div data-fieldname="XAxis" id="XAxis" style="display: inline-block;">
+                        <span style="font-weight: bold; padding-right: 5px;">X-Axis:</span>
+                        <input name="managed_x" id="managed_x" type="number"
+                               style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 121px;"
+                               tal:attributes="value python:len(context.objectValues('StoragePosition'))"/>
+                    </div>
+                    <div data-fieldname="YAxis" id="YAxis" style="display: inline-block;">
+                        <span style="font-weight: bold; padding-right: 5px;">Y-Axis:</span>
+                        <input name="managed_y" id="managed_y" type="number"
+                               style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 121px;"
+                               tal:attributes="value string:0"/>
+                    </div>
+                    <div data-fieldname="ZAxis" id="ZAxis" style="display: inline-block;">
+                        <span style="font-weight: bold; padding-right: 5px;">Z-Axis:</span>
+                        <input name="managed_z" id="managed_z" type="number"
+                               style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 121px;"
+                               tal:attributes="value string:0"/>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+
+</table>
+
+
+</body>
+</html>
+
+

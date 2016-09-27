@@ -66,10 +66,14 @@
     <element value="LogEntry"/>
     <element value="Manufacturer"/>
     <element value="Method"/>
+    <element value="InventoryOrder"/>
     <element value="SRTemplate"/>
     <element value="Supplier"/>
     <element value="SupplyOrder"/>
     <element value="Preservation"/>
+    <element value="Product"/>
+    <element value="ProductCategory"/>
+    <element value="StockItem"/>
     <element value="ReferenceAnalysis"/>
     <element value="ReferenceDefinition"/>
     <element value="ReferenceSample"/>
@@ -79,7 +83,7 @@
     <element value="Sample"/>
     <element value="SamplePartition"/>
     <element value="SamplePoint"/>
-    <element value="StorageLocation"/>
+    <element value="StorageUnit"/>
     <element value="SampleType"/>
     <element value="BatchLabel"/>
     <element value="Worksheet"/>

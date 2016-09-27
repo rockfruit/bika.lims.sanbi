@@ -40,11 +40,13 @@
   <include file="arimports.zcml"/>
 
   <include package=".analysisrequest"/>
+  <include package=".inventory"/>
   <include package=".batch"/>
   <include package=".client"/>
   <include package=".samplinground"/>
   <include package=".srtemplate"/>
   <include package=".sample"/>
+  <include package=".storage"/>
   <include package=".worksheet"/>
 
   <include package=".fields"/>

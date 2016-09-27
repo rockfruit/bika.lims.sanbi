@@ -43,22 +43,24 @@ class SuppliersView(BikaListingView):
                       'toggle': True},
             'Fax': {'title': _('Fax'),
                     'toggle': True},
+            'VAT': {'title': _('VAT'),
+                    'toggle': True}
         }
         self.review_states = [
             {'id':'default',
              'title': _('Active'),
              'contentFilter': {'inactive_state': 'active'},
              'transitions': [{'id':'deactivate'}, ],
-             'columns': ['Name', 'Email', 'Phone', 'Fax']},
+             'columns': ['Name', 'Email', 'Phone', 'Fax', 'VAT']},
             {'id':'inactive',
              'title': _('Dormant'),
              'contentFilter': {'inactive_state': 'inactive'},
              'transitions': [{'id':'activate'}, ],
-             'columns': ['Name', 'Email', 'Phone', 'Fax']},
+             'columns': ['Name', 'Email', 'Phone', 'Fax', 'VAT']},
             {'id':'all',
              'title': _('All'),
              'contentFilter':{},
-             'columns': ['Name', 'Email', 'Phone', 'Fax']},
+             'columns': ['Name', 'Email', 'Phone', 'Fax', 'VAT']},
         ]
 
     def folderitems(self):
@@ -70,6 +72,7 @@ class SuppliersView(BikaListingView):
             items[x]['Email'] = obj.getEmailAddress()
             items[x]['Phone'] = obj.getPhone()
             items[x]['Fax'] = obj.getFax()
+            items[x]['VAT'] = obj.getVAT()
             items[x]['replace']['Name'] = "<a href='%s'>%s</a>" % \
                  (items[x]['url'], items[x]['Name'])
 

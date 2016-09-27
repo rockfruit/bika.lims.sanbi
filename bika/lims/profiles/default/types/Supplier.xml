@@ -18,6 +18,8 @@
   <element value="ReferenceSample"/>
   <element value="SupplierContact"/>
   <element value="Instrument"/>
+  <element value="Product"/>
+  <element value="InventoryOrder" />
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view_fallback">False</property>
@@ -64,5 +66,26 @@
          i18n:attributes="title"
          visible="True">
   <permission value="View"/>
+ </action>
+
+<action action_id="products"
+        title="Products"
+        category="object"
+        url_expr="string:${object_url}/products"
+        i18n:attributes="title"
+        visible="True">
+  <permission value="View"/>
+</action>
+
+<action title="Orders"
+        action_id="inventoryorders"
+        category="object"
+        condition_expr=""
+        icon_expr="string:${portal_url}/images/inventoryorder.png"
+        link_target=""
+        url_expr="string:${object_url}/orders"
+        i18n:attributes="title"
+        visible="True">
+    <permission value="Modify portal content"/>
  </action>
 </object>

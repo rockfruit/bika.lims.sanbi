@@ -17,12 +17,14 @@ laboratory,Laboratory
 bika_labproducts,LabProducts
 bika_manufacturers,Manufacturers
 bika_preservations,Preservations
+bika_productcategories,ProductCategories
+bika_products,Products
+bika_stockitems,StockItems
 bika_referencedefinitions,ReferenceDefinitions
 bika_sampleconditions,SampleConditions
 bika_samplematrices,SampleMatrices
 bika_samplepoints,SamplePoints
 bika_sampletypes,SampleTypes
-bika_storagelocations,StorageLocations
 bika_samplingdeviations,SamplingDeviations
 bika_samplingrounds,SamplingRounds
 bika_srtemplates,SRTemplates

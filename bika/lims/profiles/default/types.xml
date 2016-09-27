@@ -60,10 +60,18 @@
  <object name="Method" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Methods" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Multifile" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="InventoryOrder" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="InventoryOrderFolder" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Preservation" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Preservations" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Pricelist" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="PricelistFolder" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Product" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Products" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="ProductCategories" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="ProductCategory" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="StockItem" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="StockItems" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="ReferenceAnalysis" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="ReferenceDefinition" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="ReferenceDefinitions" meta_type="Factory-based Type Information with dynamic views"/>
@@ -78,8 +86,12 @@
  <object name="SampleMatrix" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SampleMatrices" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SamplePartition" meta_type="Factory-based Type Information with dynamic views"/>
- <object name="StorageLocation" meta_type="Factory-based Type Information with dynamic views"/>
- <object name="StorageLocations" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="StorageUnit" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="StorageUnits" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="ManagedStorage" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="UnmanagedStorage" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="StoragePosition" meta_type="Factory-based Type Information with dynamic views"/>
+
  <object name="SamplePoint" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SamplePoints" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SamplesFolder" meta_type="Factory-based Type Information with dynamic views"/>

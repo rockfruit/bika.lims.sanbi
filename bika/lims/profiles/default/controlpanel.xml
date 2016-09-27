@@ -266,15 +266,6 @@
   <permission>BIKA: Manage Bika</permission>
  </configlet>
 
- <configlet title="Storage Locations" action_id="bika_storagelocations"
-    appId="bika.lims" category="bika" condition_expr=""
-    icon_expr="string:++resource++bika.lims.images/storagelocation.png"
-    url_expr="string:$portal_url/bika_setup/bika_storagelocations"
-    visible="True"
-    i18n:attributes="title">
-  <permission>BIKA: Manage Bika</permission>
- </configlet>
-
  <configlet title="Sampling Round Templates" action_id="bika_srtemplates"
     appId="bika.lims" category="bika" condition_expr=""
     icon_expr="string:++resource++bika.lims.images/srtemplate.png"
@@ -290,6 +281,33 @@
     url_expr="string:$portal_url/bika_setup/bika_subgroups"
     visible="True"
     i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+ </configlet>
+
+<configlet title="Product Categories" action_id="bika_productcategories"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/category.png"
+    url_expr="string:$portal_url/bika_setup/bika_productcategories"
+    visible="True"
+  i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+</configlet>
+
+<configlet title="Products" action_id="bika_products"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/category.png"
+    url_expr="string:$portal_url/bika_setup/bika_products"
+    visible="True"
+  i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+</configlet>
+
+<configlet title="Stock items" action_id="bika_stockitems"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/product.png"
+    url_expr="string:$portal_url/bika_setup/bika_stockitems"
+    visible="True"
+  i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
 

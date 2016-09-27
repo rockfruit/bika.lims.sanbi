@@ -13,7 +13,6 @@ GLOBALS = globals()
 VERSIONABLE_TYPES = ('AnalysisService',
                      'Calculation',
                      'SamplePoint',
-                     'StorageLocation',
                      'SampleType',
                      'AnalysisSpec',
                      'WorksheetTemplate',

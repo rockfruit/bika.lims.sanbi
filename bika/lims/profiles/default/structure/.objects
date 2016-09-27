@@ -9,6 +9,8 @@ referencesamples,ReferenceSamplesFolder
 methods,Methods
 pricelists,PricelistFolder
 supplyorders,SupplyOrderFolder
+inventoryorders,InventoryOrderFolder
 bika_setup,BikaSetup
+storage,StorageUnits
 reports,ReportFolder
 invoices,InvoiceFolder

@@ -12,12 +12,16 @@
  <object name="bika_inactive_workflow" meta_type="Workflow"/>
  <object name="bika_one_state_workflow" meta_type="Workflow"/>
  <object name="bika_order_workflow" meta_type="Workflow"/>
+ <object name="bika_inventory_order_workflow" meta_type="Workflow"/>
+ <object name="bika_stockitem_workflow" meta_type="Workflow"/>
  <object name="bika_publication_workflow" meta_type="Workflow"/>
  <object name="bika_referenceanalysis_workflow" meta_type="Workflow"/>
  <object name="bika_referencesample_workflow" meta_type="Workflow"/>
  <object name="bika_reject_analysis_workflow" meta_type="Workflow"/>
  <object name="bika_sample_workflow" meta_type="Workflow"/>
  <object name="bika_samplinground_workflow" meta_type="Workflow"/>
+ <object name="bika_storage_workflow" meta_type="Workflow"/>
+ <object name="bika_storageposition_workflow" meta_type="Workflow"/>
  <object name="bika_worksheet_workflow" meta_type="Workflow"/>
  <object name="bika_worksheetanalysis_workflow" meta_type="Workflow"/>
  <object name="sampleprep_simple" meta_type="Workflow"/>
@@ -208,6 +212,13 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
+  <type type_id="InventoryOrder">
+   <bound-workflow workflow_id="bika_inventory_order_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+  <type type_id="InventoryOrderFolder">
+  </type>
+
   <type type_id="Report">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
   </type>
@@ -240,6 +251,23 @@
   <type type_id="Pricelist">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
+  <type type_id="Products"/>
+  <type type_id="Product">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
+  <type type_id="ProductCategories"/>
+  <type type_id="ProductCategory">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
+  <type type_id="StockItems" />
+  <type type_id="StockItem">
+   <bound-workflow workflow_id="bika_stockitem_workflow"/>
   </type>
 
   <type type_id="ReferenceAnalysis">
@@ -292,9 +320,24 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
-  <type type_id="StorageLocations"/>
-  <type type_id="StorageLocation">
+  <type type_id="StorageUnits"/>
+  <type type_id="StorageUnit">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
+  <type type_id="ManagedStorage">
+   <bound-workflow workflow_id="bika_storage_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
+  <type type_id="UnmanagedStorage">
+   <bound-workflow workflow_id="bika_storage_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
+  <type type_id="StoragePosition">
+   <bound-workflow workflow_id="bika_storageposition_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 

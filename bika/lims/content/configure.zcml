@@ -18,6 +18,9 @@
     <adapter name="sortable_title" factory=".analysisservice.sortable_title_with_sort_key" />
     <adapter name="sortable_title" factory=".analysis.sortable_title_with_sort_key" />
 
+    <adapter name = "getProductUID"  factory=".stockitem.getProductUID" />
+
+
     <subscriber
       for="bika.lims.interfaces.IPricelist
            zope.lifecycleevent.interfaces.IObjectModifiedEvent"

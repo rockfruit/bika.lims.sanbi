@@ -1,8 +1,9 @@
 from zope.interface import Interface
-
+from plone.portlets.interfaces import IPortletDataProvider
+from Products.CMFPlone import PloneMessageFactory as _
+from zope import schema
 
 class IBikaLIMS(Interface):
-
     """Marker interface that defines a Zope 3 browser layer.
        If you need to register a viewlet only for the
        "bika" theme, this interface must be its layer
@@ -10,55 +11,48 @@ class IBikaLIMS(Interface):
 
 
 class IHaveNoBreadCrumbs(Interface):
-
     """Items which do not display breadcrumbs"""
 
 
 class IClientFolder(Interface):
-
     """Client folder"""
 
 
 class IClient(Interface):
-
     """Client"""
 
 
 class IBatchFolder(Interface):
-
     """Batch folder"""
 
 
 class IBatch(Interface):
-
     """Batch"""
 
 
 class IBatchLabels(Interface):
-
     """Batch label"""
 
 
 class IAnalysisRequest(Interface):
-
     """Analysis Request"""
 
 
 class IAnalysisRequestAddView(Interface):
-
     """ AR Add view """
 
 
 class IAnalysisRequestsFolder(Interface):
-
     """AnalysisRequests Folder"""
+
 
 class IInvoiceView(Interface):
     """Invoice View"""
 
-class IAnalysis(Interface):
 
+class IAnalysis(Interface):
     """Analysis"""
+
 
 class IRoutineAnalysis(Interface):
     """This adapter distinguishes normal analyses from Duplicates, References,
@@ -67,192 +61,154 @@ class IRoutineAnalysis(Interface):
 
 
 class IAnalysisSpec(Interface):
-
     """Analysis Specs"""
 
 
 class IDuplicateAnalysis(Interface):
-
     """DuplicateAnalysis"""
 
 
 class IReferenceAnalysis(Interface):
-
     """Reference Analyses """
 
 
 class IReportFolder(Interface):
-
     """Report folder"""
 
 
 class ISample(Interface):
-
     """Sample"""
 
 
 class ISampleCondition(Interface):
-
     """Sample Condition"""
 
 
 class ISampleConditions(Interface):
-
     """Sample Conditions"""
 
 
 class ISampleMatrix(Interface):
-
     """Sample Matrix"""
 
 
 class ISampleMatrices(Interface):
-
     """Sample Matrices"""
 
 
 class ISamplePartition(Interface):
-
     """Sample"""
 
 
 class ISamplesFolder(Interface):
-
     """Samples Folder"""
 
 
 class ISamplingDeviation(Interface):
-
     """Sampling Deviation"""
 
 
 class ISamplingDeviations(Interface):
-
     """Sampling Deviations"""
 
 
 class IWorksheetFolder(Interface):
-
     """WorksheetFolder"""
 
 
 class IWorksheet(Interface):
-
     """Worksheet"""
 
 
 class IReferenceSample(Interface):
-
     """Reference Sample"""
 
 
 class IReferenceSamplesFolder(Interface):
-
     """Reference Samples Folder"""
 
 
 class IReportsFolder(Interface):
-
     """Reports Folder"""
 
 
 class IInvoice(Interface):
-
     """Invoice"""
 
 
 class IInvoiceBatch(Interface):
-
     """Invoice Batch"""
 
 
 class IInvoiceFolder(Interface):
-
     """Invoices Folder"""
 
 
 class IBikaSetup(Interface):
-
     ""
 
 
 class IAnalysisCategory(Interface):
-
     ""
 
 
 class IAnalysisCategories(Interface):
-
     ""
 
 
 class IAnalysisService(Interface):
-
     ""
 
 
 class IAnalysisServices(Interface):
-
     ""
 
 
 class IAttachmentTypes(Interface):
-
     ""
 
 
 class ICalculation(Interface):
-
     ""
 
 
 class ICalculations(Interface):
-
     ""
 
 
 class IContacts(Interface):
-
     ""
 
 
 class IContact(Interface):
-
     ""
 
 
 class IDepartments(Interface):
-
     ""
 
 
 class IContainers(Interface):
-
     ""
 
 
 class IContainerTypes(Interface):
-
     ""
 
 
 class IInstrument(Interface):
-
     ""
 
 
 class IInstruments(Interface):
-
     ""
 
 
 class IInstrumentType(Interface):
-
     ""
 
 
 class IInstrumentTypes(Interface):
-
     ""
 
 
@@ -265,7 +221,6 @@ class IAnalysisProfile(Interface):
 
 
 class IAnalysisProfile(Interface):
-
     ""
 
 
@@ -278,7 +233,6 @@ class IARTemplate(Interface):
 
 
 class IARTemplate(Interface):
-
     ""
 
 
@@ -287,90 +241,118 @@ class IARTemplates(Interface):
 
 
 class ILabContacts(Interface):
-
     ""
 
 
 class ILabContact(Interface):
-
     ""
 
 
 class IManufacturer(Interface):
-
     ""
 
 
 class IManufacturers(Interface):
-
     ""
 
 
 class IMethods(Interface):
-
     ""
+
 
 class IMethod(Interface):
-
     ""
+
 
 class IMultifile(Interface):
-
     ""
 
-class ILabProducts(Interface):
 
+class ILabProducts(Interface):
     ""
 
 
 class ISamplePoint(Interface):
-
     ""
 
 
 class ISamplePoints(Interface):
-
     ""
 
-class IStorageLocation(Interface):
 
+class IStorageUnit(Interface):
     ""
 
-class IStorageLocations(Interface):
 
+class IStorageUnits(Interface):
     ""
 
+
+class IManagedStorage(Interface):
+    """Base for all storage types.
+    """
+
+
+class IUnmanagedStorage(Interface):
+    """Base for all storage types.
+    """
+
+
+class IStoragePosition(Interface):
+    """This is the marker interface applied StorageLocation items.  This is
+    only a marker for the StorageLocation type itself, it does not signify
+    a 'type' of storage.
+    """
+
+
+class IStorageTypeRegistration(Interface):
+    """
+    """
+
+class ISampleStorageLocation(Interface):
+    ""
+
+class IStockItemStorage(Interface):
+    """A StorageLocation or StorageLevel that can store StockItems must
+    provide this interface"""
 
 class ISampleType(Interface):
-
     ""
 
 
 class ISampleTypes(Interface):
-
     ""
 
 
 class ISRTemplates(Interface):
-
     ""
+
 
 class ISamplingRoundTemplate(Interface):
     ""
 
-class ISupplier(Interface):
 
+class ISupplier(Interface):
     ""
 
 
 class ISuppliers(Interface):
     ""
 
+
 class ISupplyOrder(Interface):
     ""
 
+
 class ISupplyOrderFolder(Interface):
     ""
+
+class IProductCategory(Interface):
+    """Product Category"""
+
+
+class IProductCategories(Interface):
+    """Product Categories"""
 
 
 class ISubGroups(Interface):
@@ -382,37 +364,30 @@ class ISubGroup(Interface):
 
 
 class IPreservations(Interface):
-
     ""
 
 
 class IReferenceDefinitions(Interface):
-
     ""
 
 
 class IWorksheetTemplates(Interface):
-
     ""
 
 
 class IBikaCatalog(Interface):
-
     "Marker interface for custom catalog"
 
 
 class IBikaAnalysisCatalog(Interface):
-
     "Marker interface for custom catalog"
 
 
 class IBikaSetupCatalog(Interface):
-
     "Marker interface for custom catalog"
 
 
 class IIdServer(Interface):
-
     """ Interface for ID server """
 
     def generate_id(self, portal_type, batch_size=None):
@@ -422,24 +397,24 @@ class IIdServer(Interface):
 class IReferenceWidgetVocabulary(Interface):
     """Return values for reference widgets in AR contexts
     """
+
     def __call__(**kwargs):
         """
         """
 
 
 class IDisplayListVocabulary(Interface):
-
     """Make vocabulary from catalog query.
     Return a DisplayList.
     kwargs are added to contentFilter.
     """
+
     def __call__(**kwargs):
         """
         """
 
 
 class IFieldIcons(Interface):
-
     """Used to signal an analysis result out of range alert
     """
 
@@ -454,17 +429,19 @@ class IFieldIcons(Interface):
         w/ 'min', 'max', and 'error' keys.
         """
 
-class IResultOutOfRange(Interface):
 
+class IResultOutOfRange(Interface):
     """Any code which wants to check some condition and flag an Analysis as
     out of range, uses this interface
     """
-    def __call(result = None):
+
+    def __call(result=None):
         """The adapter must return a dictionary to indicate range out of bounds:
         {
          out_of_range: boolean - the result is out of bounds,
          acceptable: boolean - the result is in acceptable error margin,
-         spec_values: dict - the min/max/error values for the failed specification
+         spec_values: dict - the min/max/error values for the failed
+         specification
         }
 
         If the adapter returns a value that resolves to boolean False, the
@@ -477,7 +454,6 @@ class IResultOutOfRange(Interface):
 
 
 class IATWidgetVisibility(Interface):
-
     """Adapter to modify the default list of fields to show on each view.
 
     Archetypes uses a widget attribute called 'visible' to decide which
@@ -488,7 +464,8 @@ class IATWidgetVisibility(Interface):
     displayed or not.
 
     an attribute named 'sort', if present, is an integer.  It is used
-    to allow some adapters to take preference over others.  It's default is '1000',
+    to allow some adapters to take preference over others.  It's default is
+    '1000',
     other lower values will take preference over higher values.
 
     """
@@ -502,7 +479,8 @@ class IATWidgetVisibility(Interface):
         :arg vis_dict: the original schema value of field.widget.visible
         :arg default: the value returned by the base Archetypes.Widget.isVisible
 
-        In default Archetypes the value for the attribute on the field may either
+        In default Archetypes the value for the attribute on the field may
+        either
         be a dict with a mapping for edit and view::
 
             visible = { 'edit' :'hidden', 'view': 'invisible' }
@@ -514,25 +492,26 @@ class IATWidgetVisibility(Interface):
             -1:      'hidden'
 
         visible: The field is shown in the view/edit screen
-        invisible: The field is skipped when rendering the visVisibleiew/edit screen
+        invisible: The field is skipped when rendering the visVisibleiew/edit
+        screen
         hidden: The field is added as <input type="hidden" />
         The default state is 'visible'.
 
-        The default rules are always applied, but any IATWidgetVisibility adapters
+        The default rules are always applied, but any IATWidgetVisibility
+        adapters
         found are called and permitted to modify the value.
 
         """
 
 
 class ISetupDataSetList(Interface):
-
     """Allow products to register distributed setup datasets (xlsx files).
     Each ISetupDataSetList adapter returns a list of values to be included in
     the load_setup_data view
     """
 
-class IJSONReadExtender(Interface):
 
+class IJSONReadExtender(Interface):
     """This interface allows an adapter to modify an object's data before
     it is sent to the HTTP response.
     """
@@ -542,30 +521,32 @@ class IJSONReadExtender(Interface):
         it should be modified in place, there is no need to return a value.
         """
 
-class ISetupDataImporter(Interface):
 
+class ISetupDataImporter(Interface):
     """ISetupDataImporter adapters are responsible for importing sections of
     the load_setup_data xlsx workbooks.
     """
 
-class IARImportFolder(Interface):
 
+class IARImportFolder(Interface):
     """Marker interface for a folder that contains ARImports
     """
 
-class IARImport(Interface):
 
+class IARImport(Interface):
     """Marker interface for an ARImport
     """
+
 
 class IPricelist(Interface):
     "Folder view marker for Pricelist"
 
+
 class IPricelistFolder(Interface):
     "Folder view marker for PricelistFolder instance"
 
-class IProductivityReport(Interface):
 
+class IProductivityReport(Interface):
     """Reports are enumerated manually in reports/*.pt - but addional reports
     can be added to this list by extension packages using this adapter.
 
@@ -583,7 +564,6 @@ class IProductivityReport(Interface):
 
 
 class IQualityControlReport(Interface):
-
     """Reports are enumerated manually in reports/*.pt - but addional reports
     can be added to this list by extension packages using this adapter.
 
@@ -601,7 +581,6 @@ class IQualityControlReport(Interface):
 
 
 class IAdministrationReport(Interface):
-
     """Reports are enumerated manually in reports/*.pt - but addional reports
     can be added to this list by extension packages using this adapter.
 
@@ -617,13 +596,14 @@ class IAdministrationReport(Interface):
     }
     """
 
-class IARPriorities(Interface):
 
+class IARPriorities(Interface):
     "Marker interface for a folder that lists ARPriority's"
 
-class IARPriority(Interface):
 
+class IARPriority(Interface):
     "Marker interface for an ARPriority"
+
 
 class IHeaderTableFieldRenderer(Interface):
     """
@@ -662,11 +642,43 @@ class IHeaderTableFieldRenderer(Interface):
         Accepts an Archetypes Field, returns HTML.
         """
 
+
 class ISamplePrepWorkflow(Interface):
     """This flag enables the sample_prep workflow transitions to be inserted
     into an object's workflow chain.
     """
 
-class ICustomPubPref(Interface):
 
+class ICustomPubPref(Interface):
     ""
+
+class IStockItem(Interface):
+    """
+    Interface for StockItem class.
+    """
+
+class IStockItems(Interface):
+    """
+    Interface for StockItems class.
+    """
+
+class IProduct(Interface):
+    """
+    Interface for Product.
+    """
+
+class IProducts(Interface):
+    """
+    Interface for Products.
+    """
+class IOrder(Interface):
+    "Interface for Orders for Inventory"
+
+class IOrderFolder(Interface):
+    "Interface for Order Folder for Inventory"
+
+class IExpiryPortlet(IPortletDataProvider):
+    count = schema.Int(title=_(u'Number of items to display'),
+                       description=_(u'How many items to list.'),
+                       required=True,
+                       default=5)

@@ -17,6 +17,8 @@ laboratory
 bika_labproducts
 bika_manufacturers
 bika_preservations
+bika_productcategories
+bika_stockitems
 bika_referencedefinitions
 bika_sampleconditions
 bika_samplematrices
@@ -25,7 +27,6 @@ bika_sampletypes
 bika_samplingdeviations
 bika_samplingrounds
 bika_srtemplates
-bika_storagelocations
 bika_suppliers
 bika_subgroups
 bika_worksheettemplates

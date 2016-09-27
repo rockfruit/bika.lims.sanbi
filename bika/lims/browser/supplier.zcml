@@ -28,4 +28,31 @@
       layer="bika.lims.interfaces.IBikaLIMS"
     />
 
+    <browser:page
+      for="bika.lims.interfaces.ISupplier"
+      name="products"
+      class="bika.lims.browser.supplier.SupplierProductsView"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.ISupplier"
+      name="orders"
+      class="bika.lims.browser.supplier.SupplierOrdersView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <!-- Translated breadcrumbs -->
+    <browser:viewlet
+      for="bika.lims.interfaces.IProduct"
+      name="plone.path_bar"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+      template="templates/path_bar.pt"
+      class="bika.lims.browser.supplier.ProductPathBarViewlet"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
 </configure>

@@ -11,6 +11,8 @@ class SamplesView(_SV):
 
     def __init__(self, context, request):
         super(SamplesView, self).__init__(context, request)
+        self.context = context
+        self.request = request
         self.view_url = self.context.absolute_url() + "/samples"
         if 'path' in self.contentFilter:
             del(self.contentFilter['path'])

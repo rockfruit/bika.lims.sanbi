@@ -1057,6 +1057,7 @@ class BikaListingView(BrowserView):
 
         for a,action in enumerate(actions):
             actions[a]['title'] = t(PMF(actions[a]['id'] + "_transition_title"))
+
         return actions
 
     def getPriorityIcon(self):

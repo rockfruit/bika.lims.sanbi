@@ -1,0 +1,60 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="bika">
+<body>
+<div metal:define-macro="portlet"
+     tal:define="member python: context.portal_membership.getAuthenticatedMember()"
+     tal:condition="python:'LabClerk' in member.getRoles() or 'LabManager' in member.getRoles()">
+<tal:items
+     tal:define="portal context/portal_url/getPortalObject;
+                 plone_view context/@@plone;
+                 DateTime python:modules['DateTime'].DateTime;
+                 rs python:view.expiry_items();
+                 results python:view.expiry_items();"
+     tal:condition="results">
+
+    <dl class="portlet" id="portlet-workflow-expiry-items">
+
+        <dt class="portletHeader"
+            i18n:translate="">Expiration Alert for Stock items
+        </dt>
+
+        <tal:block repeat="o results">
+        <dd style="padding-top:5px;padding-bottom:5px;">
+
+            <a href="#"
+                class="marker"
+                tal:attributes="href string:${o/absolute_url};
+                                title o/Description;
+                                id python:'expiry_item_'+o.Title()">
+                <img src="" height="16" width="16"
+                        tal:attributes="src string:${here/portal_url}/${o/getIcon};
+                                        title o/Type;" />
+                <span tal:replace="o/Title|o/getId"/>
+            </a>
+
+            <div class="portletDetails"
+                 style="text-align:right; color:red"
+                 tal:define="moddate o/getExpiryDate|nothing;"
+                 tal:content="python:plone_view.toLocalizedTime(moddate)"/>
+        </dd>
+        </tal:block>
+
+        <dd class="portletFooter" tal:condition="view/more_button">
+            <a href=""
+                class="portletMore"
+                tal:attributes="href string:bika_setup/bika_stockitems"
+                >
+                <!-- <span tal:content="python:str(len(rs)-5)"/ -->
+                <span i18n:translate="">More</span>
+            </a>
+
+        </dd>
+
+    </dl>
+</tal:items>
+</div>
+
+</body>
+
+</html>

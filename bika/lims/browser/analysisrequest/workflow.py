@@ -565,7 +565,6 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
         newar.setSamplingDate(ar.getSamplingDate())
         newar.setSampleType(ar.getSampleType())
         newar.setSamplePoint(ar.getSamplePoint())
-        newar.setStorageLocation(ar.getStorageLocation())
         newar.setSamplingDeviation(ar.getSamplingDeviation())
         newar.setPriority(ar.getPriority())
         newar.setSampleCondition(ar.getSampleCondition())

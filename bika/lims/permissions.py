@@ -30,11 +30,15 @@ AddSample = 'BIKA: Add Sample'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
 AddSamplePartition = 'BIKA: Add SamplePartition'
 AddSamplePoint = 'BIKA: Add SamplePoint'
-AddStorageLocation = 'BIKA: Add StorageLocation'
+AddStorageUnit = 'BIKA: Add Storage Unit'
+AddManagedStorage = 'BIKA: Add Managed Storage'
+AddUnmanagedStorage = 'BIKA: Add Unmanaged Storage'
+AddStoragePosition = 'BIKA: Add Storage Position'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
 AddSamplingRound = 'BIKA: Add SamplingRound'
 AddSRTemplate = 'BIKA: Add SRTemplate'
 AddSubGroup = 'BIKA: Add Sub-group'
+AddInventoryOrder = 'BIKA: Add Inventory Order'
 
 # Default Archetypes Add Permission
 ADD_CONTENT_PERMISSION = AddPortalContent
@@ -52,12 +56,16 @@ ADD_CONTENT_PERMISSIONS = {
     'Method': AddMethod,
     'Multifile': AddMultifile,
     'SupplyOrder': AddSupplyOrder,
+    'InventoryOrder': AddInventoryOrder,
     'Sample': AddSample,
     'SampleMatrix': AddSampleMatrix,
     'SamplePartition': AddSamplePartition,
     'SamplingDeviation': AddSamplingDeviation,
     'SamplingRound': AddSamplingRound,
-    'SubGroup': AddSubGroup,
+    'StorageUnit': AddStorageUnit,
+    'ManagedStorage': AddManagedStorage,
+    'UnmanagedStorage': AddUnmanagedStorage,
+    'StoragePosition': AddStoragePosition,
 }
 
 # Very Old permissions:
@@ -86,6 +94,9 @@ AccessJSONAPI = 'BIKA: Access JSON API'
 
 # New or changed permissions:
 # ---------------------------
+DispatchInventoryOrder = 'BIKA: Dispatch Inventory Order'
+ReceiveInventoryOrder = 'BIKA: Receive Inventory Order'
+StoreInventoryOrder = 'BIKA: Store Inventory Order'
 SampleSample = 'BIKA: Sample Sample'
 PreserveSample = 'BIKA: Preserve Sample'
 ReceiveSample = 'BIKA: Receive Sample'

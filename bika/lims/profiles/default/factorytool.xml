@@ -35,8 +35,12 @@
   <type portal_type="LabProduct"/>
   <type portal_type="Manufacturer"/>
   <type portal_type="Method"/>
+  <type portal_type="InventoryOrder"/>
   <type portal_type="SupplyOrder"/>
   <type portal_type="Preservation"/>
+  <type portal_type="Product"/>
+  <type portal_type="ProductCategory"/>
+  <type portal_type="StockItem"/>
   <type portal_type="ReferenceDefinition"/>
   <type portal_type="ReferenceSample"/>
   <type portal_type="Pricelist"/>
@@ -44,7 +48,10 @@
   <type portal_type="SampleMatrix"/>
   <type portal_type="SampleCondition"/>
   <type portal_type="SamplePoint"/>
-  <type portal_type="StorageLocation"/>
+  <type portal_type="StorageUnit"/>
+  <type portal_type="ManagedStorage"/>
+  <type portal_type="UnmanagedStorage"/>
+  <type portal_type="StoragePosition"/>
   <type portal_type="SampleType"/>
   <type portal_type="SamplingDeviation"/>
   <type portal_type="SRTemplate"/>
