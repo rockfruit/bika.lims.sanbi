@@ -72,6 +72,7 @@
         <td>
             <input name="managed_start"
                    class="start"
+                   type="number"
                    autocomplete="false"
                    tal:attributes="value python: request.get('managed_start', '1')"/>
         </td>
@@ -182,17 +183,17 @@
         <td>
 
             <div style="display: inline-block; padding-left:10px; border: 1px solid #bbb; padding: 5px; width: auto;">
-                <div data-fieldname="XAxis" id="XAxis" style="display: inline-block;">
-                    <span style="font-weight: bold; padding-right: 5px;">Rows:</span>
-                    <input name="managed_x" id="managed_x" type="number"
-                           style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 50px;"
-                           tal:attributes="value python:len(context.objectValues('StoragePosition'))"/>
-                </div>
                 <div data-fieldname="YAxis" id="YAxis" style="display: inline-block;">
-                    <span style="font-weight: bold; padding-right: 5px;">Columns:</span>
+                    <span style="font-weight: bold; padding-right: 5px;">Rows:</span>
                     <input name="managed_y" id="managed_y" type="number"
                            style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 50px;"
                            tal:attributes="value string:0"/>
+                </div>
+                <div data-fieldname="XAxis" id="XAxis" style="display: inline-block;">
+                    <span style="font-weight: bold; padding-right: 5px;">Columns:</span>
+                    <input name="managed_x" id="managed_x" type="number"
+                           style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 50px;"
+                           tal:attributes="value python:len(context.objectValues('StoragePosition'))"/>
                 </div>
             </div>
         </td>
