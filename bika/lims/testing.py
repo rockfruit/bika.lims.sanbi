@@ -228,7 +228,7 @@ class RemoteKeywords(Keywords, RemoteLibrary):
         portal = api.portal.get()
         container = portal.restrictedTraverse(path.strip('/').split('/'))
         # create object
-        obj = _createObjectByType(portal_type, container, id)
+        obj = _createObjectByType(portal_type, container, obj_id)
         obj.unmarkCreationFlag()
         self.write_at_field_values(obj, **kwargs)
         return obj.UID()
