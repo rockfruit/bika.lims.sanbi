@@ -42,7 +42,7 @@
         </td>
         <td><input name="unmanaged_titletemplate"
                    class="titletemplate"
-                   placeholder=""
+                   placeholder="Title For {id}"
                    tal:attributes="value python: request.get('unmanaged_titletemplate', '')"/>
         </td>
     <tr>
@@ -133,17 +133,13 @@
         </td>
     </tr>
     <tr>
-        <td class="bordertop">
-            <div class="unmanaged_storage_types">
-                <span style="font-weight: bold;">Storage Types</span>
-                <span class="fieldRequired" title="Required">"&nbsp;"</span><br/>
-                <span class="formHelp">
-                    Select the types of objects that can be stored here.
-                </span>
+        <td class="bordertop">Storage Types:
+            <div class="discreet">
+                Select the types of objects that can be stored here.
             </div>
         </td>
         <td class="bordertop">
-            <select id="unmanaged_storage_types" name="unmanaged_storage_types" size="8" multiple>
+            <select id="managed_storage_types" name="managed_storage_types" size="6" multiple>
                 <tal:x tal:repeat="stype python:context.getStorageTypes(show_all=True)">
                     <option tal:attributes="value python:stype['identifier']">
                         <tal:t tal:replace="python: stype['title']"/>
