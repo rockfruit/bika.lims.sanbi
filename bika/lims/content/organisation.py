@@ -19,50 +19,50 @@ from bika.lims import PMF, bikaMessageFactory as _
 
 schema = BikaFolderSchema.copy() + BikaSchema.copy() + ManagedSchema((
     StringField('Name',
-        required = 1,
-        searchable = True,
-        validators = ('uniquefieldvalidator',),
-        widget = StringWidget(
+        required=1,
+        searchable=True,
+        validators=('uniquefieldvalidator',),
+        widget=StringWidget(
             label=_("Name"),
         ),
     ),
     StringField('TaxNumber',
-        widget = StringWidget(
+        widget=StringWidget(
             label=_("VAT number"),
         ),
     ),
     StringField('Phone',
-        widget = StringWidget(
+        widget=StringWidget(
             label=_("Phone"),
         ),
     ),
     StringField('Fax',
-        widget = StringWidget(
+        widget=StringWidget(
             label=_("Fax"),
         ),
     ),
     StringField('EmailAddress',
-        schemata = 'Address',
-        widget = StringWidget(
+        schemata='Address',
+        widget=StringWidget(
             label=_("Email Address"),
         ),
-        validators = ('isEmail',)
+        validators=('isEmail',)
     ),
     AddressField('PhysicalAddress',
-        schemata = 'Address',
-        widget = AddressWidget(
+        schemata='Address',
+        widget=AddressWidget(
            label=_("Physical address"),
         ),
     ),
     AddressField('PostalAddress',
-        schemata = 'Address',
-        widget = AddressWidget(
+        schemata='Address',
+        widget=AddressWidget(
            label=_("Postal address"),
         ),
     ),
     AddressField('BillingAddress',
-        schemata = 'Address',
-        widget = AddressWidget(
+        schemata='Address',
+        widget=AddressWidget(
            label=_("Billing address"),
         ),
     ),

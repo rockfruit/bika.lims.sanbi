@@ -72,7 +72,6 @@ def read(context, request):
 
     # Get matching objects from catalog
     proxies = catalog(**contentFilter)
-
     # batching items
     page_nr = int(request.get("page_nr", 0))
     try:
@@ -91,7 +90,6 @@ def read(context, request):
 
         # Place all proxy attributes into the result.
         obj_data.update(load_brain_metadata(proxy, include_fields))
-
         # Place all schema fields ino the result.
         obj = proxy.getObject()
         obj_data.update(load_field_values(obj, include_fields))

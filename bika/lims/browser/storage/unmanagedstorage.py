@@ -11,7 +11,7 @@ from bika.lims.browser.bika_listing import BikaListingView
 class UnmanagedStorageView(BikaListingView):
     """This is the default view for Unmanaged storage.
     """
-    template = ViewPageTemplateFile("managedstorage_view.pt")
+    template = ViewPageTemplateFile("unmanagedstorage_view.pt")
 
     def __init__(self, context, request):
         super(UnmanagedStorageView, self).__init__(context, request)
@@ -87,4 +87,4 @@ class StoredItemsView(BikaListingView):
         return items
 
     def contentsMethod(self, contentFilter):
-        return self.context.getBackRefs("ItemStorageLocation")
+        return self.context.getBackReferences("ItemStorageLocation")

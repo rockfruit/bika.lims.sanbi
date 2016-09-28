@@ -224,7 +224,7 @@ class RemoteKeywords(Keywords, RemoteLibrary):
                 field.set(obj, value)
         obj.reindexObject()
 
-    def create_object(self, path, portal_type, id, **kwargs):
+    def create_object(self, path, portal_type, obj_id, **kwargs):
         portal = api.portal.get()
         container = portal.restrictedTraverse(path.strip('/').split('/'))
         # create object

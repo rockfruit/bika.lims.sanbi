@@ -434,6 +434,7 @@ class BikaListingView(BrowserView):
         # get state_id from (request or default_review_states)
         key = "%s_review_state" % self.form_id
         state_id = self.request.form.get(key, self.default_review_state)
+
         states = [r for r in self.review_states if r['id'] == state_id]
         if not states:
             logger.error("%s.review_states does not contains id='%s'." %
@@ -1159,7 +1160,7 @@ class BikaListingTable(tableview.Table):
         self.bika_listing.review_states = new_states
 
     def tabindex(self):
-        i = 0
+        i = 10
         while True:
             i += 1
             yield i

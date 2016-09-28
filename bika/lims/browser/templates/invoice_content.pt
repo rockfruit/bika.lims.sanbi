@@ -1,3 +1,19 @@
+<style type="text/css">
+    table.invoice-header {
+        width: 50%;
+    }
+
+    table.invoice-header th {
+        padding: 2px 0px;
+        margin: 10px;
+        /*background-color: #e5f8ff;*/
+    }
+
+    table.invoice-header td {
+        /*background-color: lightgray;*/
+        margin: 10px;
+    }
+</style>
 <table class="invoice-header" summary="Invoice Info">
 	<tbody>
 		<tr>

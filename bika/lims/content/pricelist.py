@@ -69,8 +69,7 @@ Field.widget.visible = True
 
 Field = schema['effectiveDate']
 Field.schemata = 'default'
-Field.required = 0 # "If no date is selected the item will be published
-                   #immediately."
+Field.required = 0  # "If no date is selected the item will be published immediately."
 Field.widget.visible = True
 
 Field = schema['expirationDate']

@@ -52,12 +52,14 @@ def load_brain_metadata(proxy, include_fields):
         if include_fields and index not in include_fields:
             continue
         val = getattr(proxy, index)
+
         if val != Missing.Value:
             try:
                 json.dumps(val)
             except:
                 continue
             ret[index] = val
+
     return ret
 
 

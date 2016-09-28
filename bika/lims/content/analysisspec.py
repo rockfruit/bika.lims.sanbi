@@ -115,19 +115,19 @@ class AnalysisSpec(BaseFolder, HistoryAwareMixin):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
-    def Title(self):
-        """ Return the title if possible, else return the Sample type.
-        Fall back on the instance's ID if there's no sample type or title.
-        """
-        if self.title:
-            title = self.title
-        else:
-            sampletype = self.getSampleType()
-            if sampletype:
-                title = sampletype.Title()
-            else:
-                title = self.id
-        return safe_unicode(title).encode('utf-8')
+    # def Title(self):
+    #     """ Return the title if possible, else return the Sample type.
+    #     Fall back on the instance's ID if there's no sample type or title.
+    #     """
+    #     if self.title:
+    #         title = self.title
+    #     else:
+    #         sampletype = self.getSampleType()
+    #         if sampletype:
+    #             title = sampletype.Title()
+    #         else:
+    #             title = self.id
+    #     return safe_unicode(title).encode('utf-8')
 
     def contextual_title(self):
         parent = self.aq_parent

@@ -30,15 +30,6 @@ Containers = StringField(
     )
 )
 
-Dimension = StringField(
-    'Dimension',
-    widget=StringWidget(
-        label=_("Dimension"),
-        description=_("Select a storage representation."),
-        visible=False,
-    )
-)
-
 FreePositions = ComputedField(
     'FreePositions',
     expression="len(here.getFreePositions())"
@@ -80,7 +71,6 @@ ZAxis = IntegerField(
 schema = BikaFolderSchema.copy() + Schema((
     Temperature,
     Containers,
-    Dimension,
     FreePositions,
     Hierarchy,
     XAxis,

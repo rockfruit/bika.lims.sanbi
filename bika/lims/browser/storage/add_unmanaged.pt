@@ -133,21 +133,23 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" class="bordertop">
+        <td class="bordertop">
             <div class="unmanaged_storage_types">
                 <span style="font-weight: bold;">Storage Types</span>
                 <span class="fieldRequired" title="Required">"&nbsp;"</span><br/>
                 <span class="formHelp">
                     Select the types of objects that can be stored here.
                 </span>
-                <select id="unmanaged_storage_types" name="unmanaged_storage_types" size="8" multiple>
-                    <tal:x tal:repeat="stype python:context.getStorageTypes(show_all=True)">
-                        <option tal:attributes="value python:stype['identifier']">
-                            <tal:t tal:replace="python: stype['title']"/>
-                        </option>
-                    </tal:x>
-                </select>
             </div>
+        </td>
+        <td class="bordertop">
+            <select id="unmanaged_storage_types" name="unmanaged_storage_types" size="8" multiple>
+                <tal:x tal:repeat="stype python:context.getStorageTypes(show_all=True)">
+                    <option tal:attributes="value python:stype['identifier']">
+                        <tal:t tal:replace="python: stype['title']"/>
+                    </option>
+                </tal:x>
+            </select>
         </td>
     </tr>
     <tr>

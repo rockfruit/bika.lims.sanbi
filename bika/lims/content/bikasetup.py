@@ -21,8 +21,10 @@ from bika.lims.vocabularies import getStickerTemplates as _getStickerTemplates
 from plone.app.folder import folder
 from zope.interface import implements
 from plone.resource.utils import iterDirectoriesOfType, queryResourceDirectory
-import sys
+
 from bika.lims.locales import COUNTRIES
+
+import sys
 
 class PrefixesField(RecordsField):
     """a list of prefixes per portal_type"""

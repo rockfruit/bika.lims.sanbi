@@ -201,8 +201,9 @@ class AddStorageUnits(Storage):
         titletemplate = form.get('units_titletemplate', None)
         idtemplate = form.get('units_idtemplate', None)
         # schema
+        unittype = form.get('units_type_uid', None)
         temperature = form.get('units_temperature', '')
-        department = form.get('units_department', None)
+        department = form.get('units_department_uid', None)
         address = form.get('units_address', None)  # schema
 
         start = form['units_start']
@@ -227,7 +228,8 @@ class AddStorageUnits(Storage):
                 instance,
                 temperature,
                 department,
-                address
+                address,
+                unittype
             )
             self.context.manage_renameObject(
                 instance.id, idtemplate.format(id=x))
@@ -275,15 +277,17 @@ class AddStorageUnits(Storage):
                 raise ValidationError(msg)
 
     def set_inputs_into_schema(
-            self, instance, temperature, department, address):
+            self, instance, temperature, department, address, unittype):
         # Set field values across each object if possible
         schema = instance.Schema()
         if temperature and 'Temperature' in schema:
             instance.Schema()['Temperature'].set(instance, temperature)
         if department and 'Department' in schema:
-            instance.Schema()['Department'].set(instance, temperature)
+            instance.Schema()['Department'].set(instance, department)
         if address and 'Address' in schema:
-            instance.Schema()['Address'].set(instance, temperature)
+            instance.Schema()['Address'].set(instance, address)
+        if unittype and 'UnitType' in schema:
+            instance.Schema()['UnitType'].set(instance, unittype)
 
 
 class AddManagedStorage(Storage):
@@ -328,10 +332,8 @@ class AddManagedStorage(Storage):
         if isinstance(storage_types, basestring):
             storage_types = [storage_types]
 
-        Dimension = form.get('managed_dimension', 'First')
         XAxis = form.get('managed_x', nr_positions)
         YAxis = form.get('managed_y', 0)
-        ZAxis = form.get('managed_z', 0)
 
         storages = []
         for x in self.get_sequence(start, nr_items):
@@ -348,9 +350,6 @@ class AddManagedStorage(Storage):
                 storage, temperature, department, address)
             # storage types are set on this managed storage:
             self.set_storage_types(storage, storage_types)
-
-            # configure layout of positions in this storage
-            storage.setDimension(form.get('managed_dimension'))
 
             # Create storage positions
             for p in range(1, nr_positions + 1):
@@ -506,6 +505,10 @@ class AddUnmanagedStorage(Storage):
             # schema
             self.set_inputs_into_schema(
                 instance, temperature, department, address)
+            if instance.id != idtemplate.format(id=x):
+                self.context.manage_renameObject(
+                    instance.id, idtemplate.format(id=x))
+
             storages.append(instance)
         return storages
 

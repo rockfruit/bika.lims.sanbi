@@ -14,28 +14,44 @@ from bika.lims.content.bikaschema import BikaFolderSchema
 from bika.lims.interfaces import IStorageUnit
 
 schema = BikaFolderSchema.copy() + Schema((
-    StringField('Temperature',
-                widget=StringWidget(
-                    label=_('Temperature'),
-                ),
-                ),
-    ReferenceField('Department',
-                   allowed_types=('Department',),
-                   relationship='StorageUnitDepartment',
-                   vocabulary='getDepartments',
-                   referenceClass=HoldingReference,
-                   widget=ReferenceWidget(
-                       checkbox_bound=0,
-                       label=_('Department'),
-                       description=_('The laboratory department'),
-                   ),
-                   ),
-    TextField('Address',
-              default_output_type='text/plain',
-              allowable_content_types=('text/plain',),
-              widget=TextAreaWidget(
-                  label=_('Address')),
-              ),
+    StringField(
+        'Temperature',
+        widget=StringWidget(
+            label=_('Temperature'),
+        )
+    ),
+    ReferenceField(
+        'Department',
+        allowed_types=('Department',),
+        relationship='StorageUnitDepartment',
+        vocabulary='getDepartments',
+        referenceClass=HoldingReference,
+        widget=ReferenceWidget(
+            checkbox_bound=0,
+            label=_('Department'),
+            description=_('The laboratory department'),
+        ),
+    ),
+    TextField(
+        'Address',
+        default_output_type='text/plain',
+        allowable_content_types=('text/plain',),
+        widget=TextAreaWidget(
+            label=_('Address')
+        )
+    ),
+    ReferenceField(
+        'UnitType',
+        allowed_types=('StorageType',),
+        relationship='StorageUnitType',
+        vocabulary='getUnitTypes',
+        referenceClass=HoldingReference,
+        widget=ReferenceWidget(
+            checkbox_bound=0,
+            label=_('Unit Types'),
+            description=_('Select a storage unit type.'),
+        ),
+    ),
 ))
 
 schema['description'].schemata = 'default'
@@ -72,6 +88,15 @@ class StorageUnit(ATFolder):
             types = [x for x in types if x['interface'].providedBy(self)]
         return types
 
+    def getUnitTypes(self):
+        """Return the unit storage types
+        """
+        bsc = getToolByName(self, 'bika_setup_catalog')
+        result = []
+        for r in bsc(portal_type='StorageType',
+                     inactive_state='active'):
+            result.append((r.UID, r.Title))
+        return DisplayList(result)
 
 schemata.finalizeATCTSchema(schema, folderish=True, moveDiscussion=False)
 registerType(StorageUnit, config.PROJECTNAME)

@@ -24,25 +24,35 @@ class InvoiceBatchInvoicesView(BikaListingView):
         request.set('disable_border', 1)
         self.context_actions = {}
         self.columns = {
-            'id': {'title': _('Invoice Number'),
+            'id': {
+                'title': _('Invoice Number'),
                 'toggle': True },
-            'client': {'title': _('Client'),
+            'client': {
+                'title': _('Client'),
                 'toggle': True},
-            'email': {'title': _('Email Address'),
+            'email': {
+                'title': _('Email Address'),
                 'toggle': False},
-            'phone': {'title': _('Phone'),
+            'phone': {
+                'title': _('Phone'),
                 'toggle': False},
-            'invoicedate': {'title': _('Invoice Date'),
+            'invoicedate': {
+                'title': _('Invoice Date'),
                 'toggle': True},
-            'startdate': {'title': _('Start Date'),
+            'startdate': {
+                'title': _('Start Date'),
                 'toggle': False},
-            'enddate': {'title': _('End Date'),
+            'enddate': {
+                'title': _('End Date'),
                 'toggle': False},
-            'subtotal': {'title': _('Subtotal'),
+            'subtotal': {
+                'title': _('Subtotal'),
                 'toggle': False},
-            'vatamount': {'title': _('VAT'),
+            'vatamount': {
+                'title': _('VAT'),
                 'toggle': False},
-            'total': {'title': _('Total'),
+            'total': {
+                'title': _('Total'),
                 'toggle': True},
             }
         self.review_states = [

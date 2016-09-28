@@ -44,7 +44,6 @@
 
                 function positionInfo(element, d) {
                     var sample = null;
-                    console.log(d);
                     if (d['state'] == "occupied") {
                         renderSampleTable(d);
                     } else {
@@ -165,14 +164,15 @@
                             .enter()
                             .append("text")
                             .text(function (d) {
-                                return letters[d - data["y"]];
+                                return letters[d - data["x"]];
                             })
                             .attr("x", function (d, i) {
                                 return marginLeft - 20;
                             })
                             .attr("y", function (d) {
                                 var i = d3.select(this.parentNode).attr("i");
-                                var y = (i - data["y"]) % data["y"] * Math.floor(heightPos / data["y"]) + marginTop;
+                                var y = (i - data['x']) % data["y"] * Math.floor(heightPos / data["y"]) + marginTop;
+                                console.log(y)
                                 var w = heightPos / data["y"] - padding;
                                 return y + w / 2;
                             });
@@ -189,13 +189,13 @@
                             })
                             .attr("y", function (d) {
                                 var i = d3.select(this.parentNode).attr("i");
-                                return Math.floor((i - rowCol) / data["y"]) * heightPos / data["y"] + marginTop;
+                                return Math.floor((i - rowCol) / data["x"]) * heightPos / data["y"] + marginTop;
                             })
                             .attr("width", function (d) {
-                                return widthPos / data["y"] - padding;
+                                return widthPos / data["x"] - padding;
                             })
                             .attr("height", function (d) {
-                                return heightPos / data["x"] - padding;
+                                return heightPos / data["y"] - padding;
                             })
                             .attr("fill", function (d) {
                                 return "#dadada";
@@ -217,14 +217,14 @@
                             })
                             .attr("cy", function (d) {
                                 var i = d3.select(this.parentNode).attr("i");
-                                var y = Math.floor((i - rowCol) / data["y"]) * heightPos / data["x"] + marginTop;
+                                var y = Math.floor((i - rowCol) / data["x"]) * heightPos / data["y"] + marginTop;
                                 var h = heightPos / data["y"] - padding;
                                 return y + h / 2;
                             })
                             .attr("r", function (d) {
                                 var w = widthPos / data["x"] - padding;
                                 var h = heightPos / data["y"] - padding;
-                                return d3.max([w / 2 - 2 * padding, h / 2 - 2 * padding])
+                                return d3.min([w / 2 - 2 * padding, h / 2 - 2 * padding])
                             })
                             .attr("fill", function (d) {
                                 if (d['occupied']) return "#fc7871";

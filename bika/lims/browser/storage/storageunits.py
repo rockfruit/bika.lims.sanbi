@@ -24,9 +24,6 @@ class StorageUnitsView(BikaListingView):
         self.catalog = 'bika_setup_catalog'
         path = '/'.join(self.context.getPhysicalPath())
         self.contentFilter = {
-            'portal_type': ['StorageUnit',
-                            'ManagedStorage',
-                            'UnmanagedStorage'],
             'path': {'query': path, 'depth': 1, 'level': 0},
             'sort_on': 'sortable_title'}
         self.context_actions = {}
@@ -52,25 +49,75 @@ class StorageUnitsView(BikaListingView):
                         'toggle': False},
         }
         self.review_states = [
-            {'id': 'default',
-             'title': _('Active'),
-             'contentFilter': {'inactive_state': 'active'},
-             'transitions': [{'id': 'deactivate'}, ],
-             'columns': ['Title',
-                         'Type',
-                         'Description',
-                         'Temperature',
-                         'Department',
-                         'Address']},
-            {'id': 'all',
-             'title': _('All'),
-             'contentFilter': {},
-             'columns': ['Title',
-                         'Type',
-                         'Description',
-                         'Temperature',
-                         'Department',
-                         'Address']},
+            {
+                'id': 'default',
+                'title': _('All'),
+                'contentFilter': {},
+                'columns': [
+                    'Title',
+                    'Type',
+                    'Description',
+                    'Temperature',
+                    'Department',
+                    'Address']
+            },
+            {
+                'id': 'units',
+                'title': _('Storage Units'),
+                'contentFilter': {
+                    'inactive_state': 'active',
+                    'portal_type': 'StorageUnit'
+                },
+                'transitions': [
+                    {'id': 'deactivate'}
+                ],
+                'columns': [
+                    'Title',
+                    'Type',
+                    'Description',
+                    'Temperature',
+                    'Department',
+                    'Address'
+                ]
+            },
+            {
+                'id': 'managed',
+                'title': _('Managed Storages'),
+                'contentFilter': {
+                    'inactive_state': 'active',
+                    'portal_type': 'ManagedStorage'
+                },
+                'transitions': [
+                    {'id': 'deactivate'}
+                ],
+                'columns': [
+                    'Title',
+                    'Type',
+                    'Description',
+                    'Temperature',
+                    'Department',
+                    'Address'
+                ]
+            },
+            {
+                'id': 'unmanaged',
+                'title': _('Unmanaged Storages'),
+                'contentFilter': {
+                    'inactive_state': 'active',
+                    'portal_type': 'UnmanagedStorage'
+                },
+                'transitions': [
+                    {'id': 'deactivate'}
+                ],
+                'columns': [
+                    'Title',
+                    'Type',
+                    'Description',
+                    'Temperature',
+                    'Department',
+                    'Address'
+                ]
+            }
         ]
         return super(StorageUnitsView, self).__call__()
 
@@ -80,7 +127,7 @@ class StorageUnitsView(BikaListingView):
         obj = item['obj']
         item['Temperature'] = obj.getTemperature()
         item['Type'] = obj.Type()
-        item['Department'] = obj.getDepartmentTitle()
+        item['Department'] = obj.getDepartment()and obj.getDepartmentTitle() or ''
         item['Address'] = obj.getAddress()
         item['replace']['Title'] = \
             "<a href='%s'>%s</a>" % (item['url'], item['Title'])
