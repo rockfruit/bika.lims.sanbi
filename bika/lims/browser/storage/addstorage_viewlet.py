@@ -348,7 +348,7 @@ class AddManagedStorage(Storage):
                 storage, temperature, department, address)
             # storage types are set on this managed storage:
             self.set_storage_types(storage, storage_types)
-
+            storage.reindexObject()
             # configure layout of positions in this storage
             storage.setDimension(form.get('managed_dimension'))
 
@@ -506,6 +506,7 @@ class AddUnmanagedStorage(Storage):
             # schema
             self.set_inputs_into_schema(
                 instance, temperature, department, address)
+            instance.reindexObject()
             storages.append(instance)
         return storages
 
