@@ -122,6 +122,7 @@ class EditView(BrowserView):
             for product in products:
                 item = [o for o in items if o['Product'] == product.getId()]
                 quantity = item[0]['Quantity'] if len(item) > 0 else 0
+
                 self.products.append({
                     'id': product.getId(),
                     'title': product.Title(),
