@@ -95,8 +95,8 @@
             <div style="width:100%" class="field ArchetypesReferenceWidget">
                 <input
                         type="text"
-                        name="units_Department"
-                        id="units_Department"
+                        name="units_department"
+                        id="units_department"
                         class="blurrable firstToFocus referencewidget"
                         value=""
                         base_query='{"portal_type": "Department", "inactive_state": "active"}'
