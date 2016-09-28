@@ -351,6 +351,8 @@ class AddManagedStorage(Storage):
             # storage types are set on this managed storage:
             self.set_storage_types(storage, storage_types)
             storage.reindexObject()
+            # configure layout of positions in this storage
+            storage.setDimension(form.get('managed_dimension'))
             # Create storage positions
             for p in range(1, nr_positions + 1):
                 pos = api.content.create(
@@ -508,7 +510,7 @@ class AddUnmanagedStorage(Storage):
             if instance.id != idtemplate.format(id=x):
                 self.context.manage_renameObject(
                     instance.id, idtemplate.format(id=x))
-
+            instance.reindexObject()
             storages.append(instance)
         return storages
 
