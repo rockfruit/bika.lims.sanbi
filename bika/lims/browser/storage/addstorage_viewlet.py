@@ -281,7 +281,7 @@ class AddStorageUnits(Storage):
         if temperature and 'Temperature' in schema:
             instance.Schema()['Temperature'].set(instance, temperature)
         if department and 'Department' in schema:
-            instance.Schema()['Department'].set(instance, temperature)
+            instance.Schema()['Department'].set(instance, department)
         if address and 'Address' in schema:
             instance.Schema()['Address'].set(instance, temperature)
 
