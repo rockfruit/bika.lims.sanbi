@@ -211,12 +211,6 @@
                                style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 121px;"
                                tal:attributes="value string:0"/>
                     </div>
-                    <div data-fieldname="ZAxis" id="ZAxis" style="display: inline-block;">
-                        <span style="font-weight: bold; padding-right: 5px;">Z-Axis:</span>
-                        <input name="managed_z" id="managed_z" type="number"
-                               style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 121px;"
-                               tal:attributes="value string:0"/>
-                    </div>
                 </div>
             </div>
         </td>

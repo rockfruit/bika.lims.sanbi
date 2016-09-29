@@ -328,10 +328,8 @@ class AddManagedStorage(Storage):
         if isinstance(storage_types, basestring):
             storage_types = [storage_types]
 
-        Dimension = form.get('managed_dimension', 'First')
         XAxis = form.get('managed_x', nr_positions)
         YAxis = form.get('managed_y', 0)
-        ZAxis = form.get('managed_z', 0)
 
         storages = []
         for x in self.get_sequence(start, nr_items):
@@ -349,9 +347,6 @@ class AddManagedStorage(Storage):
             # storage types are set on this managed storage:
             self.set_storage_types(storage, storage_types)
             storage.reindexObject()
-            # configure layout of positions in this storage
-            storage.setDimension(form.get('managed_dimension'))
-
             # Create storage positions
             for p in range(1, nr_positions + 1):
                 pos = api.content.create(
