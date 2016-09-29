@@ -8,7 +8,7 @@ from bika.lims.content.bikaschema import BikaSchema
 from decimal import Decimal
 from Products.Archetypes.public import *
 from Products.Archetypes.references import HoldingReference
-from bika.sanbi.browser.widgets import ProductSuppliersWidget
+from bika.lims.browser.widgets import ProductSuppliersWidget
 
 schema = BikaSchema.copy() + Schema((
     ReferenceField('Category',
