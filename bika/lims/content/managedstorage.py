@@ -59,23 +59,13 @@ YAxis = IntegerField(
     )
 )
 
-ZAxis = IntegerField(
-    'ZAxis',
-    widget=IntegerWidget(
-        label=_("Number of layers"),
-        description=_("Use number interval to encode the the layers."),
-        visible=False,
-    )
-)
-
 schema = BikaFolderSchema.copy() + Schema((
     Temperature,
     Containers,
     FreePositions,
     Hierarchy,
     XAxis,
-    YAxis,
-    ZAxis
+    YAxis
 ))
 
 

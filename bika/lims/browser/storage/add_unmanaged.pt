@@ -139,7 +139,7 @@
             </div>
         </td>
         <td class="bordertop">
-            <select id="managed_storage_types" name="managed_storage_types" size="6" multiple>
+            <select id="unmanaged_storage_types" name="unmanaged_storage_types" size="6" multiple>
                 <tal:x tal:repeat="stype python:context.getStorageTypes(show_all=True)">
                     <option tal:attributes="value python:stype['identifier']">
                         <tal:t tal:replace="python: stype['title']"/>
