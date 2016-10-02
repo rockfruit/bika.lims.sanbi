@@ -52,15 +52,15 @@ schema = BikaSchema.copy() + Schema((
             visible={'edit': 'visible', 'view': 'visible'},
             catalog_name='bika_setup_catalog',
             showOn=True,
-            render_own_label=True,
             base_query={'inactive_state': 'active',
                         'review_state': 'available',
                         'object_provides': IStockItemStorage.__identifier__},
             colModel=[{'columnName': 'UID', 'hidden': True},
-                      {'columnName': 'id', 'width': '30', 'label': _('ID')},
                       {'columnName': 'Title', 'width': '50', 'label': _('Title')},
+                      {"columnName": "Hierarchy", "align": "left", "label": "Hierarchy", "width": "50"}
                       ],
-        )),
+        )
+    ),
 
     ComputedField('ProductTitle',
         expression='context.getProduct().Title()',
@@ -106,12 +106,6 @@ schema = BikaSchema.copy() + Schema((
         )
     ),
 
-    StringField('location',
-        widget=StringWidget(
-            label=_("Location"),
-        )
-    ),
-
     StringField('receivedBy',
         widget=StringWidget(
             label=_("Received By"),
@@ -146,18 +140,6 @@ schema = BikaSchema.copy() + Schema((
             label='Disposal Date'
         ),
     ),
-
-    BooleanField(
-        'IsStored',
-        default=False,
-        widget=BooleanWidget(visible=False),
-    ),
-
-    StringField('StorageLevelID',
-        widget=StringWidget(
-            label=_("Location"),
-        )
-    ),
 ))
 
 schema['title'].required = False
@@ -183,9 +165,8 @@ class StockItem(BaseContent):
     def getStockItemId(self):
         return self.getId()
 
-    #______HOCINE ADDED IT_________#
-    def at_post_create_script(self):
-        title = self.getProductTitle()
-        self.setTitle(title)
+    def is_stored(self):
+        return self.getStorageLocation() is not None
+
 
 registerType(StockItem, config.PROJECTNAME)

@@ -1,20 +1,28 @@
 from AccessControl import ClassSecurityInfo
-
 from Products.Archetypes.public import *
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
+from zope.interface import implements
 
 from bika.lims import bikaMessageFactory as _, PROJECTNAME
 from bika.lims.browser.storage import getStorageTypes
 from bika.lims.content.bikaschema import BikaSchema
+from bika.lims.interfaces import IStoragePosition
+
+Hierarchy = ComputedField(
+    'Hierarchy',
+    expression="here.getHierarchy()"
+)
 
 schema = BikaSchema.copy() + Schema((
+    Hierarchy,
 ))
 schema['title'].widget.label = _('Address')
 schema['description'].widget.visible = True
 
 
 class StoragePosition(BaseContent):
+    implements(IStoragePosition)
     security = ClassSecurityInfo()
     displayContentsTab = False
     schema = schema
@@ -48,30 +56,32 @@ class StoragePosition(BaseContent):
         return types
 
     def getStoredItem(self):
-        items = self.getBackReferences('ItemStoragePosition')
+        items = self.getBackReferences('ItemStorageLocation')
+        wf_tool = getToolByName(self, 'portal_workflow')
+        review_state = wf_tool.getInfoFor(self, 'review_state')
         if items:
+            if review_state == 'available':
+                wf_tool.doActionFor(self.aq_inner, 'occupy')
+                self.reindexObject(idxs=["review_state", ])
             return items[0]
+        elif review_state == 'occupied':
+            wf_tool.doActionFor(self.aq_inner, 'liberate')
+            self.reindexObject(idxs=["review_state", ])
+        return None
 
     def guard_occupy_transition(self):
         """Occupy transition cannot proceed until StoredItem is set.
 
-        If this position is available, but also has a StoredItem set,
+        If this position is available and StoredItem set,
         then we will prevent the occupy transition from becoming available.
         """
+
         wftool = self.portal_workflow
         review_state = wftool.getInfoFor(self, 'review_state')
         if (review_state == 'available' or review_state == 'reserved') \
                 and self.getStoredItem():
             return True
         return False
-
-    def workflow_script_occupy(self):
-        """If possible, occupy the parent storage.
-        """
-        wf = getToolByName(self, 'portal_workflow')
-        tids = [t['id'] for t in wf.getTransitionsFor(self.aq_parent)]
-        if 'occupy' in tids:
-            wf.doActionFor(self.aq_parent, 'occupy')
 
     def guard_liberate_transition(self):
         """Liberate transition cannot proceed unless StoredItem is cleared.
@@ -119,3 +129,8 @@ class StoragePosition(BaseContent):
 
 
 registerType(StoragePosition, PROJECTNAME)
+
+def ObjectModifiedEventHandler(instance, event):
+    """Execute after each object modification?!
+    """
+    print 'salammmmmmmmm'

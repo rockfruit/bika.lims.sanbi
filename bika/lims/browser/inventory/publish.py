@@ -71,7 +71,7 @@ class OrderPublishView(BrowserView):
         """ Returns true if the options top panel will be displayed
             in the template
         """
-        return self.request.get('pub', '1') == '1';
+        return self.request.get('pub', '1') == '1'
 
     def getOrderTemplate(self):
         templates_dir = 'templates/sheets'

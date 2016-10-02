@@ -18,7 +18,7 @@ class Sticker(BrowserView):
         # Orders get stickers for their stock items
         new_items = []
         for i in self.items:
-            if i.portal_type == 'Order':
+            if i.portal_type == 'InventoryOrder':
                 catalog = bsc(portal_type='StockItem')
                 new_items += [pi.getObject() for pi in catalog
                               if pi.getObject().getOrderId() == i.getId()]

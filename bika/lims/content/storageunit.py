@@ -98,5 +98,22 @@ class StorageUnit(ATFolder):
             result.append((r.UID, r.Title))
         return DisplayList(result)
 
+    def getHierarchy(self, structure=False, separator='.', fieldname='id'):
+        hierarchy = []
+        item = self
+        while (1):
+            try:
+                accessor = getattr(item, fieldname).getAccessor()
+                val = accessor() if callable(accessor) else accessor
+            except AttributeError:
+                val = getattr(item, fieldname)
+            # Don't report on the /storage folder
+            if item.portal_type == 'StorageUnits':
+                break
+            url = "<a href='%s'>%s</a>" % (item.absolute_url(), val)
+            hierarchy.append(url if structure else val)
+            item = item.aq_parent
+        return separator.join(reversed(hierarchy))
+
 schemata.finalizeATCTSchema(schema, folderish=True, moveDiscussion=False)
 registerType(StorageUnit, config.PROJECTNAME)

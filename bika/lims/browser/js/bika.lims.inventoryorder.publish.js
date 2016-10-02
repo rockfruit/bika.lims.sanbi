@@ -16,7 +16,7 @@ function OrderPublishView() {
 
         'letter': {
                 dimensions: [216, 279],
-                margins:    [20, 20, 30, 20] },
+                margins:    [20, 20, 30, 20] }
     };
 
     /**
@@ -114,8 +114,8 @@ function OrderPublishView() {
         $('#margin-left').change(function(e) {
             applyMarginAndReload($(this), 3);
         });
-    }
-
+    };
+    
     function applyMarginAndReload(element, idx) {
         var currentlayout = $('#sel_layout').val();
         // Maximum margin (1/4 of the total width)

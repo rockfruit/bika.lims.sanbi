@@ -190,6 +190,7 @@ class InventoryOrder(BaseFolder):
             folder = self.bika_setup.bika_stockitems
             for i in range(quantity):
                 pi = _createObjectByType('StockItem', folder, tmpID())
+                pi.setTitle(product.Title() + '-' + str(i + 1))
                 pi.setProduct(product)
                 pi.setOrderId(self.getId())
                 pi.setDateReceived(DateTime())

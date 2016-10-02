@@ -84,6 +84,7 @@ class StoredItemsView(BikaListingView):
                 "<a href='%s'>%s</a>" % (items[x]['url'], items[x]['Title'])
             stitles = [s['title'] for s in obj.getStorageTypes()]
             items[x]['StorageTypes'] = ','.join(stitles)
+
         return items
 
     def contentsMethod(self, contentFilter):

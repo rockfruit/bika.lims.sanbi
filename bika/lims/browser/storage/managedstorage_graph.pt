@@ -1,6 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
-        i18n:domain="bika">
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="bika">
 
 <head>
 
@@ -16,30 +18,30 @@
                 });
 
                 function renderSampleTable(d) {
-                    $("div#pos-info-div").removeClass("hidden");
-                      var arr = d["address"].split(".");
-                      var posID = arr[arr.length -1];
-                      $("span.position-info").html(posID);
-                      var portalType = 'Aliquot';
-                      if(d["subject"]){
-                          portalType = 'Biospecimen';
-                      }
-                      var html = "<table class='pos-info'>" +
-                        "<tbody>" +
-                        "<tr><td>"+ portalType +" ID </td>" +
-                        "<td><a> " + d["aid"] + "</a></td><tr>" +
-                        "<tr><td>"+ portalType +" Name </td>" +
-                        "<td>" + d['name'] + "</td><tr>" +
-                        "<tr><td> Volume </td>" +
-                        "<td>" + d['volume'] + " ml</td><tr>";
-                      if(portalType === 'Biospecimen'){
-                        html += "<tr><td> Subject ID </td>" +
-                        "<td>" + d['subject'] + "</td><tr>";
-                      }
-                      html +=  "</tbody></table>";
+                    var posInfoElement = $("div#pos-info-div");
+                    posInfoElement.removeClass("hidden");
+                    $("span.position-info").html(d["address"]);
+                    var portalType = d["portal_type"];
+                    var volumeHTML = "<tr><td> Volume </td>" +
+                                     "<td>" + d['volume'] + "</td><tr>";
+                    var html = "<table class='pos-info'>" +
+                    "<tbody>" +
+                    "<tr><td>"+ portalType +" ID </td>" +
+                    "<td><a href='"+ d["path"] +"'> " + d["aid"] + "</a></td><tr>" +
+                    "<tr><td>"+ portalType +" Name </td>" +
+                    "<td>" + d["name"] + "</td><tr>";
 
-                      $("div#pos-info-div table").remove();
-                      $("div#pos-info-div").append(html);
+                    if(portalType === "Aliquot" || portalType === "Biospecimen"){
+                        html += volumeHTML;
+                    }
+                    if(portalType === 'Biospecimen'){
+                    html += "<tr><td> Subject ID </td>" +
+                    "<td>" + d['subject'] + "</td><tr>";
+                    }
+                    html +=  "</tbody></table>";
+
+                    $("div#pos-info-div table").remove();
+                    posInfoElement.append(html);
                 }
 
                 function positionInfo(element, d) {

@@ -99,6 +99,8 @@ class StoragePositionsView(BikaListingView):
         si = obj.getStoredItem()
         item['StoredItem'] = si.Title() if si else ''
 
+        item['review_state'] = 'occupied' if si else 'available'
+
         return item
 
 
@@ -133,26 +135,32 @@ class PositionsInfo:
         }
 
         children = self.context.getPositions()
-        for Position in children:
-            aid, name, subject, volume, path, pos = '', '', 0, 0, '', ''
-            if not Position.available():
-                sample = Position.getSample()
-                aid = sample.getId()
-                name = sample.Title()
-                volume = sample.getVolume()
-                path = sample.absolute_url_path()
-                pos = Position.absolute_url_path()
+        for position in children:
+            aid, name, subject, volume, unit, path, pos = '', '', '', 0, '', '', ''
+            if not position.available():
+                item = position.getStoredItem()
+                path = item.absolute_url_path()
+                pos = position.absolute_url_path()
+                aid = item.getId()
+                name = item.Title()
+                if item.portal_type == 'Biospecimen' or item.portal_type == 'Aliquot':
+                    volume = item.getVolume()
+                    unit = item.getUnit()
+                    subject = item.getSubject()
 
-            state = workflow.getInfoFor(Position, 'review_state')
+            state = workflow.getInfoFor(position, 'review_state')
+            portal_type = position.getStoredItem() and position.getStoredItem().portal_type or ''
             positions.append({
+                'portal_type': portal_type,
                 'occupied': state == 'occupied',
                 'reserved': state == 'reserved',
-                'address': Position.getId(),
+                'address': position.getHierarchy(),
                 'state': state,
                 'aid': aid,
                 'name': name,
                 'subject': subject,
                 'volume': volume,
+                'unit': unit,
                 'path': path,
                 'pos': pos
             })

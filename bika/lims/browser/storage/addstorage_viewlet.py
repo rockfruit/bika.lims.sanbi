@@ -336,11 +336,12 @@ class AddManagedStorage(Storage):
         YAxis = form.get('managed_y', 0)
 
         storages = []
+        hierarchy = self.context.getHierarchy()
         for x in self.get_sequence(start, nr_items):
             storage = api.content.create(
                 container=self.context,
                 type="ManagedStorage",
-                id=idtemplate.format(id=x),
+                id=hierarchy + '.' + idtemplate.format(id=x),
                 title=titletemplate.format(id=x),
                 XAxis=int(XAxis),
                 YAxis=int(YAxis)
@@ -360,6 +361,7 @@ class AddManagedStorage(Storage):
                     title="{id}".format(id=p))
                 # storage types are set on each pos inside the storage too.
                 self.set_storage_types(pos, storage_types)
+                pos.reindexObject()
 
             storages.append(storage)
 
@@ -495,6 +497,10 @@ class AddUnmanagedStorage(Storage):
         start = form['unmanaged_start']
         nr_items = int(form['unmanaged_nr_items'])
 
+        storage_types = form.get('umanaged_storage_types', [])
+        if isinstance(storage_types, basestring):
+            storage_types = [storage_types]
+
         storages = []
         for x in self.get_sequence(start, nr_items):
             instance = api.content.create(
@@ -505,12 +511,32 @@ class AddUnmanagedStorage(Storage):
             # schema
             self.set_inputs_into_schema(
                 instance, temperature, department, address)
+
             if instance.id != idtemplate.format(id=x):
                 self.context.manage_renameObject(
                     instance.id, idtemplate.format(id=x))
 
+            # storage types are set on this managed storage:
+            self.set_storage_types(instance, storage_types)
+            instance.reindexObject()
+
             storages.append(instance)
         return storages
+
+    def set_storage_types(self, instance, storage_types):
+        # Set field values across each object if possible
+
+        schema = instance.Schema()
+        if storage_types and 'StorageTypes' in schema:
+            instance.Schema()['StorageTypes'].set(instance, storage_types)
+        self.provide_storagetype_interfaces(instance, storage_types)
+
+    def provide_storagetype_interfaces(self, instance, storage_types):
+        """Assign any selected storage type interfaces to the storage.
+        """
+        for storage_type in storage_types:
+            inter = resolve(storage_type)
+            alsoProvides(instance, inter)
 
     def validate_form_inputs(self):
         form = self.request.form
@@ -551,6 +577,12 @@ class AddUnmanagedStorage(Storage):
                 self.form_error(msg)
                 self.request.response.redirect(self.context.absolute_url())
                 raise ValidationError(msg)
+
+        # verify storage_type interface selection
+        storage_types = form.get('umanaged_storage_types', [])
+        if not storage_types:
+            raise ValidationError(
+                u'To create managed storage, at least one storage type must be selected.')
 
     def set_inputs_into_schema(
             self, instance, temperature, department, address):
