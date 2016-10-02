@@ -69,3 +69,45 @@ def mailto_link_from_ccemails(ccemails):
         return ",".join(ret)
 
 
+def store_item_managed_storage(order, storage, stockitems, num_items, product_name, product_id):
+    """Store stock items in storage and set the number of the order's items
+    """
+    # get available positions
+    num_free_positions = storage.getFreePositions()
+    if num_items > num_free_positions:
+        return 'The number entered for %s is %d but the ' \
+               'storage level ( %s ) only has %d spaces.' % (
+               product_name, num_items, storage.getHierarchy(), num_free_positions)
+
+    positions = storage.get_free_positions()
+    for i, pi in enumerate(stockitems):
+        position = positions[i]
+        pi.setStorageLocation(position.UID())
+
+        wf_tool = getToolByName(position, 'portal_workflow')
+        wf_tool.doActionFor(position, 'occupy')
+
+        for lineitem in order.order_lineitems:
+            if lineitem['Product'] == product_id:
+                lineitem['Stored'] += 1
+
+    return ''
+
+def store_item_unmanaged_storage(order, storage, stockitems, num_items, product_id):
+    """Store stock items in unmanaged storage
+    """
+    wf_tool = storage.portal_workflow
+    review_state = wf_tool.getInfoFor(storage, 'review_state')
+    if review_state == 'occupied':
+        return 'The storage %s is no more available' % storage.getHierarchy()
+
+    for pi in stockitems:
+        pi.setStorageLocation(storage.UID())
+
+        for lineitem in order.order_lineitems:
+            if lineitem['Product'] == product_id:
+                lineitem['Stored'] += 1
+
+
+def store_item_storage_unit():
+    pass
