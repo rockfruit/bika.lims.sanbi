@@ -32,7 +32,7 @@ Containers = StringField(
 
 FreePositions = ComputedField(
     'FreePositions',
-    expression="len(here.getFreePositions())"
+    expression="len(here.get_free_positions())"
 )
 
 Hierarchy = ComputedField(
@@ -59,15 +59,6 @@ YAxis = IntegerField(
     )
 )
 
-ZAxis = IntegerField(
-    'ZAxis',
-    widget=IntegerWidget(
-        label=_("Number of layers"),
-        description=_("Use number interval to encode the the layers."),
-        visible=False,
-    )
-)
-
 schema = BikaFolderSchema.copy() + Schema((
     Temperature,
     Containers,
@@ -75,7 +66,6 @@ schema = BikaFolderSchema.copy() + Schema((
     Hierarchy,
     XAxis,
     YAxis,
-    ZAxis
 ))
 
 
@@ -130,7 +120,7 @@ class ManagedStorage(ATFolder):
 
         return [brain.getObject() for brain in brains]
 
-    def getFreePositions(self):
+    def get_free_positions(self):
         bsc = getToolByName(self, 'bika_setup_catalog')
         path = "/".join(self.getPhysicalPath())
         brains = bsc.searchResults(
@@ -143,6 +133,18 @@ class ManagedStorage(ATFolder):
 
         return [brain.getObject() for brain in brains]
 
+    def only_items_of_portal_type(self, portal_type):
+        """ Return items of a @portal_type stored in this storage.
+        """
+        positions = self.getPositions()
+        items = []
+        for position in positions:
+            item = position.getStoredItem()
+            if item and item.portal_type == portal_type:
+                items.append(item)
+
+        return items
+    
     def guard_occupy_transition(self):
         """Occupy transition signifies that this storage level cannot accept
         further items for storage.
@@ -150,7 +152,7 @@ class ManagedStorage(ATFolder):
         For managed storage levels, this transition is allowed when all
         available storage locations are occupied.
         """
-        if not self.getFreePositions:
+        if not self.get_free_positions:
             return True
 
     def guard_liberate_transition(self):
@@ -160,7 +162,7 @@ class ManagedStorage(ATFolder):
         For managed storage levels, this transition is allowed when some
         available storage locations are available.
         """
-        if self.getFreePositions:
+        if self.get_free_positions:
             return True
 
 
