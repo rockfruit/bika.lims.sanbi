@@ -4,6 +4,8 @@ from zope import event
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from operator import itemgetter, methodcaller
+
+from bika.lims.browser.inventory import store_item_managed_storage, store_item_unmanaged_storage
 from bika.lims.utils import to_utf8
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser import BrowserView
@@ -47,17 +49,17 @@ class OrderView(BrowserView):
             stored = item['Stored']
             all_stored = qty == stored
             self.items.append({
-		        'title': product.Title(),
-		        'description': product.Description(),
-		        'unit': product.getUnit(),
-		        'price': price,
-		        'vat': '%s%%' % vat,
-		        'quantity': qty,
-		        'totalprice': '%.2f' % (price * qty),
+                'title': product.Title(),
+                'description': product.Description(),
+                'unit': product.getUnit(),
+                'price': price,
+                'vat': '%s%%' % vat,
+                'quantity': qty,
+                'totalprice': '%.2f' % (price * qty),
                 'prodid': prodid,
                 'stored': stored,
                 'all_stored': all_stored,
-		    })
+            })
         self.items = sorted(self.items, key = itemgetter('title'))
         # Render the template
         return self.template()
@@ -69,6 +71,10 @@ class EditView(BrowserView):
 
     template = ViewPageTemplateFile('templates/order_edit.pt')
     field = ViewPageTemplateFile('templates/row_field.pt')
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
 
     def __call__(self):
         portal = self.portal
@@ -201,6 +207,11 @@ class PrintView(OrderView):
 
 
 class OrderStore(BrowserView):
+    """Store order's stock items in storage.
+    """
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
 
     def __call__(self):
         portal = self.portal
@@ -210,11 +221,12 @@ class OrderStore(BrowserView):
         # Allow adding items to this context
         context.setConstrainTypesMode(0)
         bsc = getToolByName(self.context, 'bika_setup_catalog')
+        uc = getToolByName(context, 'uid_catalog')
         catalog = [pi.getObject() for pi in bsc(portal_type='StockItem')]
         # Remaining stock items of this order
         stockitems = [pi for pi in catalog \
                             if (pi.getOrderId() == self.context.getId() and
-                                pi.getIsStored() == False)]
+                                pi.is_stored() == False)]
         # Organize items as per their product
         products_dict = {}
         for pi in stockitems:
@@ -239,70 +251,55 @@ class OrderStore(BrowserView):
         context.processForm()
 
         index = 0
-        for name, _ in sorted(request.form.iteritems(), key=lambda (k, v): (k, v)):
+        for name, _ in sorted(request.form.iteritems(), key=lambda (k,v): (k, v)):
+
             if not name.startswith('storage-'):
                 continue
+
             if 'StorageInventory_uid' in request.form:
                 if isinstance(request.form['StorageInventory_uid'], list):
                     uid = request.form['StorageInventory_uid'][index]
                 else:
                     uid = request.form['StorageInventory_uid']
-            if not uid:
-                continue
-            index += 1
-            containers = [c.getObject() for c in bsc(portal_type='StorageInventory', UID=uid)]
-            container = containers[0] if containers else None
-            if not container:
-                continue
-            child_container = [cc.getObject() for cc in bsc(portal_type='StorageInventory',
-                                                            getUnitID=container.getId())
-                                              if not cc.getObject().getIsOccupied()]
 
-            product_id = name.lstrip('storage-')
-            product_name = product_names[product_id]
-            # Get available storage levels under parent
-            hierarchy = request.form[name]
+                if not uid:
+                    continue
 
-            stockitems = products_dict[product_id]
-            # Get number of items to store
-            nid = 'number-' + product_id
-            if nid in request.form and request.form[nid]:
-                number = int(request.form[nid])
-            else:
-                continue
-            # Validate number and storage levels
-            if number < 1:
-                continue
-            message = ''
-            if number > len(stockitems):
-                message = _('Number entered for ' + product_name + ' is invalid.')
-            if not child_container:
-                message = 'Storage level is required. Please correct.'
-            if number > len(child_container):
-                message = 'The number entered for %s is %d but the ' \
-                          'storage level ( %s ) only has %d spaces.' % (
-                             product_name, number, hierarchy, len(child_container))
-            if message:
-                self.context.plone_utils.addPortalMessage(_(message), 'error')
-                continue
+                product_id = name.lstrip('storage-')
+                product_name = product_names[product_id]
 
-            # Store stock items in available levels
-            stockitems = stockitems[:number]
-            for i, pi in enumerate(stockitems):
-                position = child_container[i]
-                pi.setStorageLevelID(position.getId())
-                pi.setIsStored(True)
-                # set inventory stock item position
-                position.setISID(pi.getId())
-                position.setIsOccupied(True)
-                # Decrement number of available children of parent
-                nac = position.aq_parent.getNumberOfAvailableChildren()
-                position.aq_parent.setNumberOfAvailableChildren(nac - 1)
-                position.reindexObject(idxs=["getISID"])
-                # Increment number of items stored in Order view
-                for lineitem in self.context.order_lineitems:
-                    if lineitem['Product'] == product_id:
-                        lineitem['Stored'] += 1
+                stockitems = products_dict[product_id]
+
+                nid = 'number-' + product_id
+                if nid in request.form and request.form[nid]:
+                    number = int(request.form[nid])
+                else:
+                    continue
+
+                # Validate number and storage levels
+                if number < 1:
+                    continue
+
+                message = ''
+                if number > len(stockitems):
+                    message = _('Number entered for ' + product_name + ' is invalid.')
+
+                stockitems = stockitems[:number]
+                container = [c.getObject() for c in uc(UID=uid)][0]
+                if container.portal_type == 'ManagedStorage':
+                    message = store_item_managed_storage(self.context, container, stockitems, number,
+                                                         product_name, product_id)
+                elif container.portal_type == 'UnmanagedStorage':
+                    message = store_item_unmanaged_storage(self.context, container, stockitems, number,
+                                                           product_id)
+                elif container.portal_type == 'StorageUnit':
+                    # Todo
+                    pass
+
+                if message:
+                    self.context.plone_utils.addPortalMessage(_(message), 'error')
+                    continue
+
         request.response.redirect(context.absolute_url_path())
         return
 
