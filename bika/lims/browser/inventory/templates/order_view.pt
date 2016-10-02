@@ -65,47 +65,37 @@
                                 </td>
                                 <td tal:condition="received">
                                     <div class="center" tal:condition="item/all_stored"> - </div>
-                                    <div class="center" tal:condition="python: not item['all_stored']">
+                                    <div tal:condition="python: not item['all_stored']">
                                         <input
-                                            min=0
+                                            tal:attributes="max python: item['quantity']-item['stored'];
+                                                            name python: 'number-'+str(item['prodid'])"
+                                            min="0"
                                             type="number"
-                                            style="width: 50px"
-                                            tal:attributes="max python:item['quantity']-item['stored'];
-                                                            name python:'number-' + str(item['prodid'])"/>
+                                            style="width: 50px;"
+                                        />
                                     </div>
                                 </td>
                                 <td tal:condition="received" class="center">
                                     <div  tal:condition="item/all_stored"> - </div>
                                     <div style="width:100%;margin:0 auto;" class="field ArchetypesReferenceWidget" tal:condition="python:not item['all_stored']">
-
-
                                         <input
                                             type="text"
-                                            id="StorageInventory"
+                                            tal:attributes="name python:'storage-' + str(item['prodid'])"
+                                            id="stockItem"
                                             class="blurrable firstToFocus referencewidget"
                                             value=""
-                                            size=25
-                                            tal:attributes="name python:'storage-' + str(item['prodid'])"
-                                            base_query='{"portal_type": "StorageInventory", "object_provides": "bika.sanbi.interfaces.IInventoryAssignable"}'
+                                            base_query='{"portal_type": ["ManagedStorage", "UnmanagedStorage"], "object_provides": "bika.lims.interfaces.IStockItemStorage", "review_state": "available", "inactive_state": "active"}'
                                             search_query='{}'
                                             catalog_name="bika_setup_catalog"
                                             ui_item="Title"
                                             autocomplete="false"
-                                            combogrid_options='{"colModel":[{
-                                                                    "columnName": "Title",
-                                                                    "align": "left",
-                                                                    "label": "Title",
-                                                                    "width": "20"
-                                                                }, {
-                                                                    "columnName": "Description",
-                                                                    "align": "center",
-                                                                    "label": "Description",
-                                                                    "width": "80"
-                                                                }],
+                                            combogrid_options='{"colModel": [{"columnName": "Title", "align": "left", "label": "Title", "width": "30"},
+                                                                         {"columnName": "Hierarchy", "align": "left", "label": "Hierarchy", "width": "50"},
+                                                                         {"columnName": "FreePositions", "align": "left", "label": "Free", "width": "20"},
+                                                                         {"columnName": "UID", "hidden": true}],
                                                                 "search_fields": ["Title"],
                                                                 "catalog_name": "bika_setup_catalog",
                                                                 "url": "referencewidget_search",
-
                                                                 "discard_empty": [],
                                                                 "popup_width": "550px",
                                                                 "showOn": true,
@@ -117,7 +107,7 @@
                                                                 "force_all": true,
                                                                 "portal_types": {}}'/>
 
-                                        <input type="hidden" name="StorageInventory_uid" id="StorageInventory_uid">
+                                        <input type="hidden" name="StorageInventory_uid" id="StorageInventory_uid"/>
                                     </div>
                                 </td>
                                 <td class="currency">
