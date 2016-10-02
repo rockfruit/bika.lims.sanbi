@@ -32,7 +32,7 @@ Containers = StringField(
 
 FreePositions = ComputedField(
     'FreePositions',
-    expression="string:Yes"
+    expression="'Yes'"
 )
 
 Hierarchy = ComputedField(
