@@ -480,6 +480,13 @@ class AddUnmanagedStorage(Storage):
         self.context.plone_utils.addPortalMessage(msg)
         self.request.response.redirect(self.context.absolute_url())
 
+    def provide_storagetype_interfaces(self, instance, storage_types):
+        """Assign any selected storage type interfaces to this location.
+        """
+        for storage_type in storage_types:
+            inter = resolve(storage_type)
+            alsoProvides(instance, inter)
+
     def create_unmanaged_storages(self):
         """Create the new unmanaged storages from form values.
         """
@@ -495,6 +502,10 @@ class AddUnmanagedStorage(Storage):
         start = form['unmanaged_start']
         nr_items = int(form['unmanaged_nr_items'])
 
+        storage_types = form.get('unmanaged_storage_types', [])
+        if isinstance(storage_types, basestring):
+            storage_types = [storage_types]
+
         storages = []
         for x in self.get_sequence(start, nr_items):
             instance = api.content.create(
@@ -509,6 +520,8 @@ class AddUnmanagedStorage(Storage):
                 self.context.manage_renameObject(
                     instance.id, idtemplate.format(id=x))
             instance.reindexObject()
+            # storage types are set on this unmanaged storage:
+            self.set_storage_types(instance, storage_types)
             storages.append(instance)
         return storages
 
