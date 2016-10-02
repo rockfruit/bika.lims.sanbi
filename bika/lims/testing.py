@@ -230,8 +230,6 @@ class RemoteKeywords(Keywords, RemoteLibrary):
         # create object
         obj = _createObjectByType(portal_type, container, obj_id)
         obj.unmarkCreationFlag()
-        # if obj.id != obj_id:
-        #     obj.aq_parent.manage_renameObject(obj.id, obj_id)
         self.write_at_field_values(obj, **kwargs)
         return obj.UID()
 

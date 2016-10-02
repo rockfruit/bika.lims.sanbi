@@ -22,3 +22,5 @@ from addresswidget import AddressWidget
 from scheduleinputwidget import ScheduleInputWidget
 from integer import IntegerWidget
 from decimal import DecimalWidget
+from productsupplierswidget import ProductSuppliersView
+from productsupplierswidget import ProductSuppliersWidget

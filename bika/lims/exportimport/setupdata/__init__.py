@@ -1774,7 +1774,7 @@ class AR_Templates(WorksheetImporter):
 
             obj = _createObjectByType("ARTemplate", folder, tmpID())
             obj.edit(
-                title=row['title'],
+                title=str(row['title']),
                 description=row.get('description', ''),
                 Remarks=row.get('Remarks', ''),
                 ReportDryMatter=bool(row['ReportDryMatter']))
