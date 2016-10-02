@@ -76,7 +76,7 @@ class StockItemsView(BikaListingView):
         self.review_states = [
             {'id':'default',
              'title': _('Valid'),
-             'contentFilter': {'review_state': 'valid'},
+             'contentFilter': {'review_state': 'available'},
              'transitions': [{'id':'discard'}, ],
              'columns': ['stockitemID',
                          'orderId',
@@ -92,7 +92,7 @@ class StockItemsView(BikaListingView):
                          'disposalDate']},
             {'id':'discarded',
              'title': _('Discarded'),
-             'contentFilter': {'review_state': 'discarded'},
+             'contentFilter': {'review_state': 'used'},
              'transitions': [{'id':'keep'}, ],
              'columns': ['stockitemID',
                          'orderId',
@@ -132,9 +132,9 @@ class StockItemsView(BikaListingView):
             items[x]['batchId'] = obj.getBatchId()
             items[x]['product'] = obj.getProductTitle()
             items[x]['productCategory'] = obj.getProductCategoryTitle()
-            items[x]['location'] = obj.getLocation()
-            items[x]['storageLevelId'] = obj.getStorageLevelID()
-            items[x]['isStored'] = 'yes' if obj.getIsStored() else 'no'
+            items[x]['location'] = obj.getStorageLocation() and obj.getStorageLocation().getHierarchy() or None
+            # items[x]['storageLevelId'] = obj.getStorageLevelID()
+            items[x]['isStored'] = 'yes' if obj.is_stored() else 'no'
             items[x]['dateReceived'] = self.ulocalized_time(obj.getDateReceived())
             items[x]['dateOpened'] = self.ulocalized_time(obj.getDateOpened())
             items[x]['expiryDate'] = self.ulocalized_time(obj.getExpiryDate())
