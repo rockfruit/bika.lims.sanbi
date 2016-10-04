@@ -372,11 +372,6 @@ class AddManagedStorage(Storage):
         schema = instance.Schema()
         if storage_types and 'StorageTypes' in schema:
             instance.Schema()['StorageTypes'].set(instance, storage_types)
-        self.provide_storagetype_interfaces(instance, storage_types)
-
-    def provide_storagetype_interfaces(self, instance, storage_types):
-        """Assign any selected storage type interfaces to this location.
-        """
         for storage_type in storage_types:
             inter = resolve(storage_type)
             alsoProvides(instance, inter)
@@ -432,7 +427,6 @@ class AddManagedStorage(Storage):
         Dimension = form.get('managed_dimension', 'First')
         XAxis = form.get('managed_x', nr_positions)
         YAxis = form.get('managed_y', 0)
-        ZAxis = form.get('managed_z', 0)
 
         # Check that none of the IDs conflict with existing items
         start = form['managed_start']
@@ -482,9 +476,11 @@ class AddUnmanagedStorage(Storage):
         self.context.plone_utils.addPortalMessage(msg)
         self.request.response.redirect(self.context.absolute_url())
 
-    def provide_storagetype_interfaces(self, instance, storage_types):
-        """Assign any selected storage type interfaces to this location.
-        """
+    def set_storage_types(self, instance, storage_types):
+        # Set field values across each object if possible
+        schema = instance.Schema()
+        if storage_types and 'StorageTypes' in schema:
+            instance.Schema()['StorageTypes'].set(instance, storage_types)
         for storage_type in storage_types:
             inter = resolve(storage_type)
             alsoProvides(instance, inter)
@@ -523,7 +519,7 @@ class AddUnmanagedStorage(Storage):
                 self.context.manage_renameObject(
                     instance.id, idtemplate.format(id=x))
 
-            # storage types are set on this managed storage:
+            # storage types are set on this unmanaged storage:
             self.set_storage_types(instance, storage_types)
             instance.reindexObject()
 
