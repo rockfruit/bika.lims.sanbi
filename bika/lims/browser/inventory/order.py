@@ -251,9 +251,10 @@ class OrderStore(BrowserView):
         context.processForm()
 
         index = 0
-        for name, _ in sorted(request.form.iteritems(), key=lambda (k,v): (k, v)):
+        sorted_form = sorted(request.form.iteritems(), key=lambda (k,v): (k, v))
+        for field_name, field_value in sorted_form:
 
-            if not name.startswith('storage-'):
+            if not field_name.startswith('storage-'):
                 continue
 
             if 'StorageInventory_uid' in request.form:
@@ -265,7 +266,7 @@ class OrderStore(BrowserView):
                 if not uid:
                     continue
 
-                product_id = name.lstrip('storage-')
+                product_id = field_name.lstrip('storage-')
                 product_name = product_names[product_id]
 
                 stockitems = products_dict[product_id]
@@ -297,7 +298,7 @@ class OrderStore(BrowserView):
                     pass
 
                 if message:
-                    self.context.plone_utils.addPortalMessage(_(message), 'error')
+                    self.context.plone_utils.addPortalMessage(_(message))
                     continue
 
         request.response.redirect(context.absolute_url_path())
