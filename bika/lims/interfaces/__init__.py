@@ -329,7 +329,8 @@ class ISampleTypes(Interface):
     ""
 
 
-class ISRTemplates(Interface):
+class ISamplingRoundTemplates(Interface):
+
     ""
 
 
